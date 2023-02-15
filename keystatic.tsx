@@ -8,6 +8,25 @@ export default config({
       name: process.env.NEXT_PUBLIC_VERCEL_GIT_REPO_SLUG!,
     },
   },
+  singletons: {
+    about: collection({
+      label: 'About',
+      directory: 'content/pages',
+      getItemSlug: () => 'about',
+      schema: {
+        content: fields.document({
+          label: 'Content',
+          componentBlocks: {
+            something: component({
+              label: 'Some Component',
+              preview: () => null,
+              schema: {},
+            }),
+          },
+        }),
+      },
+    }),
+  },
   collections: {
     posts: collection({
       label: 'Posts',

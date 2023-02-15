@@ -1,8 +1,7 @@
 import { createReader } from 'keystatic/reader'
-import { DocumentRenderer } from 'keystatic/renderer'
-import config from '../keystatic'
+import config from '../../keystatic'
 
-import { format } from 'date-fns'
+import BlogPost from '../../components/BlogPost'
 
 export async function getStaticPaths() {
   const reader = createReader('', config)
@@ -24,8 +23,6 @@ export async function getStaticProps(context) {
   const post = await reader.collections.posts.read(slug)
   // Get async data from 'content'
   const content = await (post?.content() || [])
-  console.log('post', post)
-  console.log('content', content)
   return {
     props: {
       post: {
@@ -37,14 +34,5 @@ export async function getStaticProps(context) {
 }
 
 export default function Post({ post }) {
-  console.log(post)
-  return (
-    <div>
-      <h1>{post.title}</h1>
-      <p>{format(new Date(post.publishedDate), 'do MMM yyyy')}</p>
-      <p>{post.authors}</p>
-      {post.coverImage && <img src={post.coverImage} alt={'Cover image'} />}
-      <DocumentRenderer document={post.content} />
-    </div>
-  )
+  return <BlogPost post={post} />
 }
