@@ -1,5 +1,11 @@
-import Link from "next/link";
+import Link from 'next/link'
 
 export default function Index() {
-  return <Link href="/keystatic">Go to Keystatic</Link>;
+  return (
+    <>
+      <Link className='text-3xl font-bold underline' href='/keystatic'>
+        Go to the Keystatic dashboard
+      </Link>
+    </>
+  )
 }
