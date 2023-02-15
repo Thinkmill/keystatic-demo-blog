@@ -1,6 +1,8 @@
+import type { InferGetStaticPropsType } from 'next'
 import { createReader } from 'keystatic/reader'
 import config from '../keystatic'
 import { DocumentRenderer } from 'keystatic/renderer'
+import Banner from '../components/Banner'
 
 export async function getStaticProps() {
   const reader = createReader('', config)
@@ -17,11 +19,19 @@ export async function getStaticProps() {
   }
 }
 
-export default function About({ about }) {
+export default function About({
+  about,
+}: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
     <>
-      <h1>About page</h1>
-      <DocumentRenderer document={about.content} />
+      <DocumentRenderer
+        document={about.content}
+        componentBlocks={{
+          Banner: (props) => (
+            <Banner bodyText={props.bodyText} url={props.fields.url} />
+          ),
+        }}
+      />
     </>
   )
 }

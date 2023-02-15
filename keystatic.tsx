@@ -1,4 +1,6 @@
-import { collection, component, config, fields } from 'keystatic'
+import { collection, component, config, fields, singleton } from 'keystatic'
+import Banner from './components/Banner'
+import InlineCTA from './components/InlineCTA'
 
 export default config({
   storage: {
@@ -9,18 +11,38 @@ export default config({
     },
   },
   singletons: {
-    about: collection({
+    home: singleton({
+      label: 'Home',
+      directory: 'content/pages/home',
+      schema: {
+        content: fields.document({
+          label: 'Content',
+        }),
+      },
+    }),
+    about: singleton({
       label: 'About',
-      directory: 'content/pages',
-      getItemSlug: () => 'about',
+      directory: 'content/pages/about',
       schema: {
         content: fields.document({
           label: 'Content',
           componentBlocks: {
-            something: component({
-              label: 'Some Component',
-              preview: () => null,
-              schema: {},
+            banner: component({
+              label: 'Banner',
+              preview: (props) => (
+                <Banner
+                  bodyText={props.fields.bodyText.value}
+                  url={props.fields.url.value}
+                />
+              ),
+              schema: {
+                bodyText: fields.text({
+                  label: 'Body Text',
+                }),
+                url: fields.url({
+                  label: 'URL',
+                }),
+              },
             }),
           },
         }),
@@ -50,10 +72,24 @@ export default config({
         content: fields.document({
           label: 'Content',
           componentBlocks: {
-            something: component({
-              label: 'Some Component',
-              preview: () => null,
-              schema: {},
+            inlineCta: component({
+              label: 'Inline CTA',
+              preview: (props) => (
+                <InlineCTA
+                  title={props.fields.title.value}
+                  summary={props.fields.summary.value}
+                  linkButton={{
+                    href: props.fields.link.value,
+                    label: props.fields.linkLabel.value,
+                  }}
+                />
+              ),
+              schema: {
+                title: fields.text({ label: 'Title' }),
+                summary: fields.text({ label: 'Summary' }),
+                linkLabel: fields.text({ label: 'Link Label' }),
+                link: fields.url({ label: 'Link' }),
+              },
             }),
           },
         }),

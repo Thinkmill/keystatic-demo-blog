@@ -1,3 +1,4 @@
+import type { InferGetStaticPropsType } from 'next'
 import PostCard from '../../components/PostCard'
 import { createReader } from 'keystatic/reader'
 import config from '../../keystatic'
@@ -26,7 +27,9 @@ export async function getStaticProps() {
   }
 }
 
-export default function Blog({ posts }) {
+export default function Blog({
+  posts,
+}: InferGetStaticPropsType<typeof getStaticProps>) {
   if (posts.length === 0) <h2>There are no posts available</h2>
   return (
     <ul className='grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3'>

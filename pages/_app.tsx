@@ -14,7 +14,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
       <Header />
-      <div className='px-6'>
+      <div className='px-6 prose max-w-none'>
         <Component {...pageProps} />
       </div>
     </>
