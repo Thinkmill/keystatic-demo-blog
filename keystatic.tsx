@@ -101,6 +101,9 @@ export default config({
         }),
         publishedDate: fields.date({ label: 'Published Date' }),
         coverImage: fields.image({ label: 'Cover Image' }),
+        wordCount: fields.integer({
+          label: 'Word count',
+        }),
         content: fields.document({
           label: 'Content',
           componentBlocks: {

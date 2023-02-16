@@ -2,6 +2,7 @@ import type { InferGetStaticPropsType, GetStaticPropsContext } from 'next'
 import { createReader } from 'keystatic/reader'
 import config from '../keystatic'
 import dateFormatter from '../utils/dateFormatter'
+import readTime from '../utils/readTime'
 import { DocumentRenderer } from 'keystatic/renderer'
 import InlineCTA from '../components/InlineCTA'
 import Banner from '../components/Banner'
@@ -49,8 +50,11 @@ export default function Post({
   return (
     <div>
       <h1>{post.title}</h1>
-      <p>{dateFormatter(post.publishedDate, 'do MMM yyyy')}</p>
+      {post.publishedDate && (
+        <p>{dateFormatter(post.publishedDate, 'do MMM yyyy')}</p>
+      )}
       <p>{post.authors}</p>
+      {post.wordCount && readTime(post.wordCount)}
       <DocumentRenderer
         document={post.content}
         componentBlocks={{

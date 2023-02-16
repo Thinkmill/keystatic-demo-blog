@@ -10,7 +10,5 @@ export function youtubeEmbedId(youTubeLink: string) {
   } else {
     embedId = url
   }
+  return embedId
 }
-
-// https://www.youtube.com/watch?v=N0wHweOu-LQ
-// https://www.youtube.com/watch?v=qsMAVTs2agU

@@ -1,5 +1,6 @@
 import dateFormatter from '../utils/dateFormatter'
 import type { PostType } from '../pages'
+import readTime from '../utils/readTime'
 
 export default function AllPosts({ posts }: { posts: PostType[] }) {
   if (posts.length === 0) <h2>There are no posts available</h2>
@@ -12,10 +13,13 @@ export default function AllPosts({ posts }: { posts: PostType[] }) {
             className='no-underline hover:text-tm-red-brand'
           >
             {post.coverImage && <img src={post.coverImage} alt='Cover image' />}
-            <p>{dateFormatter(post.publishedDate, 'do MMM yyyy')}</p>
+            {post.publishedDate && (
+              <p>{dateFormatter(post.publishedDate, 'do MMM yyyy')}</p>
+            )}
             <h3>{post.title}</h3>
             <p>{post.summary}</p>
             <p>{post.authors && post.authors.map((author) => author)}</p>
+            {post.wordCount && readTime(post.wordCount)}
           </a>
         </li>
       ))}
