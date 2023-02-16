@@ -3,6 +3,7 @@ import { createReader } from 'keystatic/reader'
 import config from '../keystatic'
 import { DocumentRenderer } from 'keystatic/renderer'
 import Banner from '../components/Banner'
+import Divider from '../components/Divider'
 
 export async function getStaticProps() {
   const reader = createReader('', config)
@@ -27,8 +28,16 @@ export default function About({
       <DocumentRenderer
         document={about.content}
         componentBlocks={{
-          Banner: (props) => (
-            <Banner bodyText={props.bodyText} url={props.fields.url} />
+          divider: (props) => <Divider noIcon={props.noIcon} />,
+          banner: (props) => (
+            <Banner
+              heading={props.heading}
+              bodyText={props.bodyText}
+              externalLink={{
+                href: props.externalLinkHref,
+                label: props.externalLinkLabel,
+              }}
+            />
           ),
         }}
       />

@@ -1,3 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+main a {
+  @apply font-medium text-gray-900 underline decoration-gray-300 decoration-2 underline-offset-4 hover:decoration-tm-red-brand hover:text-tm-red-brand hover:bg-none bg-none;
+}

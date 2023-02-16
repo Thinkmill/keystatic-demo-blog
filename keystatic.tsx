@@ -1,6 +1,8 @@
 import { collection, component, config, fields, singleton } from 'keystatic'
 import Banner from './components/Banner'
 import InlineCTA from './components/InlineCTA'
+import Divider from './components/Divider'
+import MediaEmbed, { MediaTypesEnum } from './components/MediaEmbed'
 
 export default config({
   storage: {
@@ -17,6 +19,17 @@ export default config({
       schema: {
         content: fields.document({
           label: 'Content',
+          componentBlocks: {
+            divider: component({
+              label: 'Divider',
+              preview: (props) => (
+                <Divider noIcon={props.fields.noIcon.value} />
+              ),
+              schema: {
+                noIcon: fields.checkbox({ label: 'No Icon' }),
+              },
+            }),
+          },
         }),
       },
     }),
@@ -27,20 +40,39 @@ export default config({
         content: fields.document({
           label: 'Content',
           componentBlocks: {
+            divider: component({
+              label: 'Divider',
+              preview: (props) => (
+                <Divider noIcon={props.fields.noIcon.value} />
+              ),
+              schema: {
+                noIcon: fields.checkbox({ label: 'No Icon' }),
+              },
+            }),
             banner: component({
               label: 'Banner',
               preview: (props) => (
                 <Banner
+                  heading={props.fields.heading.value}
                   bodyText={props.fields.bodyText.value}
-                  url={props.fields.url.value}
+                  externalLink={{
+                    href: props.fields.externalLinkHref.value,
+                    label: props.fields.externalLinkLabel.value,
+                  }}
                 />
               ),
               schema: {
+                heading: fields.text({
+                  label: 'Heading',
+                }),
                 bodyText: fields.text({
                   label: 'Body Text',
                 }),
-                url: fields.url({
-                  label: 'URL',
+                externalLinkHref: fields.url({
+                  label: 'External Link',
+                }),
+                externalLinkLabel: fields.text({
+                  label: 'Link Label',
                 }),
               },
             }),
@@ -72,6 +104,15 @@ export default config({
         content: fields.document({
           label: 'Content',
           componentBlocks: {
+            divider: component({
+              label: 'Divider',
+              preview: (props) => (
+                <Divider noIcon={props.fields.noIcon.value} />
+              ),
+              schema: {
+                noIcon: fields.checkbox({ label: 'No Icon' }),
+              },
+            }),
             inlineCta: component({
               label: 'Inline CTA',
               preview: (props) => (
@@ -79,6 +120,7 @@ export default config({
                   title={props.fields.title.value}
                   summary={props.fields.summary.value}
                   linkButton={{
+                    externalLink: props.fields.externalLink.value,
                     href: props.fields.link.value,
                     label: props.fields.linkLabel.value,
                   }}
@@ -89,10 +131,67 @@ export default config({
                 summary: fields.text({ label: 'Summary' }),
                 linkLabel: fields.text({ label: 'Link Label' }),
                 link: fields.url({ label: 'Link' }),
+                externalLink: fields.checkbox({
+                  label: 'External Link',
+                }),
+              },
+            }),
+            banner: component({
+              label: 'Banner',
+              preview: (props) => (
+                <Banner
+                  heading={props.fields.heading.value}
+                  bodyText={props.fields.bodyText.value}
+                  externalLink={{
+                    href: props.fields.externalLinkHref.value,
+                    label: props.fields.externalLinkLabel.value,
+                  }}
+                />
+              ),
+              schema: {
+                heading: fields.text({
+                  label: 'Heading',
+                }),
+                bodyText: fields.text({
+                  label: 'Body Text',
+                }),
+                externalLinkHref: fields.url({
+                  label: 'External Link',
+                }),
+                externalLinkLabel: fields.text({
+                  label: 'Link Label',
+                }),
+              },
+            }),
+            embed: component({
+              label: 'Embed',
+              preview: (props) => (
+                <MediaEmbed
+                  mediaType={props.fields.mediaType.value}
+                  iframe={props.fields.iframe.value}
+                />
+              ),
+              schema: {
+                mediaType: fields.select({
+                  defaultValue: MediaTypesEnum.VIDEO,
+                  label: 'Media Type',
+                  options: [
+                    {
+                      label: 'Video',
+                      value: MediaTypesEnum.VIDEO,
+                    },
+                    { label: 'Audio', value: MediaTypesEnum.AUDIO },
+                  ],
+                }),
+                iframe: fields.text({
+                  label: 'iframe embed',
+                  multiline: true,
+                }),
               },
             }),
           },
         }),
+
         authors: fields.array(fields.text({ label: 'Name' }), {
           label: 'Authors',
           itemLabel: (props) => props.value,

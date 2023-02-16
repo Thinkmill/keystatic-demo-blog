@@ -6,9 +6,20 @@ module.exports = {
     "./components/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        'tm-red': {
+          light: '#FFF3F3',
+          brand: '#ed0000',
+          dark: '#e10000',
+        },
+      },
   },
+},
   plugins: [
     require('@tailwindcss/typography'),
   ],
+  corePlugins: {
+    preflight: false,
+  },
 }

@@ -1,10 +1,12 @@
-import type { InferGetStaticPropsType } from 'next'
+import type { InferGetStaticPropsType, GetStaticPropsContext } from 'next'
 import { createReader } from 'keystatic/reader'
-import config from '../../keystatic'
-import Link from 'next/link'
-import dateFormatter from '../../utils/dateFormatter'
+import config from '../keystatic'
+import dateFormatter from '../utils/dateFormatter'
 import { DocumentRenderer } from 'keystatic/renderer'
-import InlineCTA from '../../components/InlineCTA'
+import InlineCTA from '../components/InlineCTA'
+import Banner from '../components/Banner'
+import Divider from '../components/Divider'
+import MediaEmbed from '../components/MediaEmbed'
 
 export async function getStaticPaths() {
   const reader = createReader('', config)
@@ -19,8 +21,13 @@ export async function getStaticPaths() {
   }
 }
 
-export async function getStaticProps(context) {
-  const slug = context.params.post
+export const getStaticProps = async ({ params }: GetStaticPropsContext) => {
+  const slug = params?.post
+
+  if (typeof slug !== 'string') {
+    throw new Error('What? WHYYYY')
+  }
+
   const reader = createReader('', config)
   // Get data for post matching current slug
   const post = await reader.collections.posts.read(slug)
@@ -41,23 +48,36 @@ export default function Post({
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
     <div>
-      <Link href='/blog'>Back to blog</Link>
       <h1>{post.title}</h1>
       <p>{dateFormatter(post.publishedDate, 'do MMM yyyy')}</p>
       <p>{post.authors}</p>
-      {post.coverImage && <img src={post.coverImage} alt={'Cover image'} />}
       <DocumentRenderer
         document={post.content}
         componentBlocks={{
-          InlineCTA: (props) => (
+          inlineCTA: (props) => (
             <InlineCTA
               title={props.title}
               summary={props.summary}
               linkButton={{
+                externalLink: props.externalLink,
                 href: props.linkSlug,
                 label: props.linkLabel,
               }}
             />
+          ),
+          divider: (props) => <Divider noIcon={props.noIcon} />,
+          banner: (props) => (
+            <Banner
+              heading={props.heading}
+              bodyText={props.bodyText}
+              externalLink={{
+                href: props.externalLinkHref,
+                label: props.externalLinkLabel,
+              }}
+            />
+          ),
+          mediaEmbed: (props) => (
+            <MediaEmbed mediaType={props.mediaType} iframe={props.iframe} />
           ),
         }}
       />
