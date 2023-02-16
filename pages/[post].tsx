@@ -6,7 +6,7 @@ import { DocumentRenderer } from 'keystatic/renderer'
 import InlineCTA from '../components/InlineCTA'
 import Banner from '../components/Banner'
 import Divider from '../components/Divider'
-import MediaEmbed from '../components/MediaEmbed'
+import YouTubeEmbed from '../components/YouTubeEmbed'
 
 export async function getStaticPaths() {
   const reader = createReader('', config)
@@ -76,8 +76,8 @@ export default function Post({
               }}
             />
           ),
-          mediaEmbed: (props) => (
-            <MediaEmbed mediaType={props.mediaType} iframe={props.iframe} />
+          youtubeEmbed: (props) => (
+            <YouTubeEmbed youtubeLink={props.youtubeLink} />
           ),
         }}
       />

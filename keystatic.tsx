@@ -2,7 +2,7 @@ import { collection, component, config, fields, singleton } from 'keystatic'
 import Banner from './components/Banner'
 import InlineCTA from './components/InlineCTA'
 import Divider from './components/Divider'
-import MediaEmbed, { MediaTypesEnum } from './components/MediaEmbed'
+import YouTubeEmbed from './components/YouTubeEmbed'
 
 export default config({
   storage: {
@@ -163,29 +163,14 @@ export default config({
                 }),
               },
             }),
-            embed: component({
-              label: 'Embed',
+            youtubeEmbed: component({
+              label: 'YouTube Embed',
               preview: (props) => (
-                <MediaEmbed
-                  mediaType={props.fields.mediaType.value}
-                  iframe={props.fields.iframe.value}
-                />
+                <YouTubeEmbed youtubeLink={props.fields.youtubeLink.value} />
               ),
               schema: {
-                mediaType: fields.select({
-                  defaultValue: MediaTypesEnum.VIDEO,
-                  label: 'Media Type',
-                  options: [
-                    {
-                      label: 'Video',
-                      value: MediaTypesEnum.VIDEO,
-                    },
-                    { label: 'Audio', value: MediaTypesEnum.AUDIO },
-                  ],
-                }),
-                iframe: fields.text({
-                  label: 'iframe embed',
-                  multiline: true,
+                youtubeLink: fields.url({
+                  label: 'YouTube URL',
                 }),
               },
             }),

@@ -10,7 +10,7 @@ export default function Footer() {
       <div className='mx-auto max-w-7xl'>
         <ul className='flex flex-row justify-center gap-10'>
           {NavItems.map((item) => (
-            <li className='list-none'>
+            <li className='list-none' key={item.slug}>
               <a
                 key={item.slug}
                 className={cx(
