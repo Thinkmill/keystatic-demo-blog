@@ -4,7 +4,8 @@ summary: >-
   How the work we do in open source and client services drives our craft to new
   levels.
 publishedDate: '2023-02-10'
-coverImage: coverImage.undefined
+coverImage: null
+wordCount: 359
 content:
   files: []
 authors:
