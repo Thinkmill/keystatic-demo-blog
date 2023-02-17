@@ -86,7 +86,7 @@ export default function Post({
       <DocumentRenderer
         document={post.content}
         componentBlocks={{
-          inlineCTA: (props) => (
+          inlineCta: (props) => (
             <InlineCTA
               title={props.title}
               summary={props.summary}
@@ -111,7 +111,7 @@ export default function Post({
           youtubeEmbed: (props) => (
             <YouTubeEmbed youtubeLink={props.youtubeLink} />
           ),
-          tweet: (props) => <TweetEmbed tweet={props.tweet} />,
+          tweetEmbed: (props) => <TweetEmbed tweet={props.tweet} />,
         }}
       />
     </div>
