@@ -19,9 +19,9 @@ export type ButtonProps = ButtonOrLinkProps & {
 }
 
 const buttonClasses =
-  'px-4 py-2 bg-tm-red-brand text-white hover:bg-tm-red-light hover:text-tm-red-dark'
+  'px-4 py-2 bg-tm-red-brand text-white hover:text-white hover:bg-black rounded-md no-underline'
 
-const Button = ({ onClick, href, externalLink, label }: ButtonProps) => {
+const Button = ({ href, externalLink, label }: ButtonProps) => {
   if (externalLink) {
     return (
       <a

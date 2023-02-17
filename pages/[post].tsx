@@ -8,6 +8,7 @@ import InlineCTA from '../components/InlineCTA'
 import Banner from '../components/Banner'
 import Divider from '../components/Divider'
 import YouTubeEmbed from '../components/YouTubeEmbed'
+import { TweetEmbed } from '../components/TweetEmbed'
 
 export async function getStaticPaths() {
   const reader = createReader('', config)
@@ -48,13 +49,40 @@ export default function Post({
   post,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
-    <div>
+    <div className='max-w-4xl mx-auto'>
       <h1>{post.title}</h1>
-      {post.publishedDate && (
-        <p>{dateFormatter(post.publishedDate, 'do MMM yyyy')}</p>
+      <p className='text-lg'>{post.summary}</p>
+      <div className='flex justify-between mt-0 mb-9'>
+        <span className='flex gap-1'>
+          {post.authors &&
+            post.authors &&
+            post.authors.map((author, index) => (
+              <p className='my-0' key={index}>
+                {author}
+              </p>
+            ))}
+        </span>
+        <span className='flex gap-1'>
+          {post.publishedDate && (
+            <p className='my-0'>
+              {dateFormatter(post.publishedDate, 'do MMM yyyy')}
+            </p>
+          )}
+          ·{' '}
+          {post.wordCount && post.wordCount !== 0 && (
+            <p className='my-0'>{readTime(post.wordCount)}</p>
+          )}
+        </span>
+      </div>
+      {post.coverImage && (
+        <div className='not-prose mb-10'>
+          <img
+            src={`/${post.coverImage}`}
+            className='w-full rounded-md'
+            alt='Cover image'
+          />
+        </div>
       )}
-      <p>{post.authors}</p>
-      {post.wordCount && readTime(post.wordCount)}
       <DocumentRenderer
         document={post.content}
         componentBlocks={{
@@ -83,6 +111,7 @@ export default function Post({
           youtubeEmbed: (props) => (
             <YouTubeEmbed youtubeLink={props.youtubeLink} />
           ),
+          tweet: (props) => <TweetEmbed tweet={props.tweet} />,
         }}
       />
     </div>

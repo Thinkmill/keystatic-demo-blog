@@ -3,6 +3,7 @@ import Banner from './components/Banner'
 import InlineCTA from './components/InlineCTA'
 import Divider from './components/Divider'
 import YouTubeEmbed from './components/YouTubeEmbed'
+import { TweetEmbed } from './components/TweetEmbed'
 
 export default config({
   storage: {
@@ -100,7 +101,7 @@ export default config({
           validation: { length: { min: 4, max: 200 } },
         }),
         publishedDate: fields.date({ label: 'Published Date' }),
-        coverImage: fields.image({ label: 'Cover Image' }),
+        coverImage: fields.text({ label: 'Image' }),
         wordCount: fields.integer({
           label: 'Word count',
         }),
@@ -177,6 +178,17 @@ export default config({
                 }),
               },
             }),
+            tweetEmbed: component({
+              label: 'Tweet Embed',
+              preview: (props) => (
+                <TweetEmbed tweet={props.fields.tweet.value} />
+              ),
+              schema: {
+                tweet: fields.url({
+                  label: 'Tweet URL',
+                }),
+              },
+            }),
           },
         }),
 
@@ -184,6 +196,32 @@ export default config({
           label: 'Authors',
           itemLabel: (props) => props.value,
         }),
+      },
+    }),
+    externalArticles: collection({
+      label: 'External Article',
+      directory: 'content/externalArticles',
+      getItemSlug: (data) => data.title,
+      schema: {
+        title: fields.text({
+          label: 'Title',
+          validation: { length: { min: 4 } },
+        }),
+        directLink: fields.url({
+          label: 'Article Link',
+        }),
+        source: fields.text({
+          label: 'Link Source',
+          defaultValue: 'Read more.',
+        }),
+        coverImage: fields.text({
+          label: 'Cover Image',
+        }),
+        summary: fields.text({
+          label: 'Summary',
+          validation: { length: { min: 4, max: 200 } },
+        }),
+        publishedDate: fields.date({ label: 'Published Date' }),
       },
     }),
   },

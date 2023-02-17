@@ -14,8 +14,8 @@ export default function Banner({
   }
 }) {
   return (
-    <div className='p-10 bg-slate-100 rounded flex flex-row items-center'>
-      <div className='pr-10'>
+    <div className='p-10 bg-slate-100 rounded-xl gap-10 flex flex-row items-center'>
+      <div>
         <Image src={stars} aria-hidden='true' alt='stars icon' />
       </div>
       <div className='flex-row'>
