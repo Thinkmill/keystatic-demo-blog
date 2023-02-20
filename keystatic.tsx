@@ -4,6 +4,8 @@ import InlineCTA from './components/InlineCTA'
 import Divider from './components/Divider'
 import YouTubeEmbed from './components/YouTubeEmbed'
 import { TweetEmbed } from './components/TweetEmbed'
+import LoopingVideo from './components/LoopingVideo'
+import Image from './components/Image'
 
 export default config({
   storage: {
@@ -98,7 +100,7 @@ export default config({
         }),
         summary: fields.text({
           label: 'Summary',
-          validation: { length: { min: 4, max: 200 } },
+          validation: { length: { min: 4 } },
         }),
         publishedDate: fields.date({ label: 'Published Date' }),
         coverImage: fields.text({ label: 'Image' }),
@@ -187,6 +189,44 @@ export default config({
                 tweet: fields.url({
                   label: 'Tweet URL',
                 }),
+              },
+            }),
+            loopingVideo: component({
+              label: 'Looping Video',
+              preview: (props) => (
+                <LoopingVideo
+                  src={props.fields.src.value}
+                  caption={props.fields.caption.value}
+                />
+              ),
+              schema: {
+                src: fields.text({
+                  label: 'File Name',
+                }),
+                caption: fields.text({
+                  label: 'Caption',
+                }),
+              },
+            }),
+            image: component({
+              label: 'Image',
+              preview: (props) => (
+                <Image
+                  src={props.fields.src.value}
+                  alt={props.fields.alt.value}
+                  caption={props.fields.caption.value}
+                />
+              ),
+              schema: {
+                src: fields.text({
+                  label: 'File Name',
+                  validation: { length: { min: 4 } },
+                }),
+                alt: fields.text({
+                  label: 'Alt text',
+                  validation: { length: { min: 4 } },
+                }),
+                caption: fields.text({ label: 'Caption' }),
               },
             }),
           },

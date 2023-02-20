@@ -9,6 +9,8 @@ import Banner from '../components/Banner'
 import Divider from '../components/Divider'
 import YouTubeEmbed from '../components/YouTubeEmbed'
 import { TweetEmbed } from '../components/TweetEmbed'
+import LoopingVideo from '../components/LoopingVideo'
+import Image from '../components/Image'
 
 export async function getStaticPaths() {
   const reader = createReader('', config)
@@ -50,8 +52,6 @@ export default function Post({
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
     <div className='max-w-4xl mx-auto'>
-      <h1>{post.title}</h1>
-      <p className='text-lg'>{post.summary}</p>
       <div className='flex justify-between mt-0 mb-9'>
         <span className='flex gap-1'>
           {post.authors &&
@@ -73,6 +73,8 @@ export default function Post({
           ) : null}
         </span>
       </div>
+      <h1>{post.title}</h1>
+      <p className='text-lg'>{post.summary}</p>
       {post.coverImage && (
         <div className='not-prose mb-10'>
           <img
@@ -111,6 +113,12 @@ export default function Post({
             <YouTubeEmbed youtubeLink={props.youtubeLink} />
           ),
           tweetEmbed: (props) => <TweetEmbed tweet={props.tweet} />,
+          loopingVideo: (props) => (
+            <LoopingVideo src={props.src} caption={props.caption} />
+          ),
+          image: (props) => (
+            <Image src={props.src} alt={props.alt} caption={props.caption} />
+          ),
         }}
       />
     </div>
