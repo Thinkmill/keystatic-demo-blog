@@ -1,4 +1,4 @@
-import { useRouter } from 'next/router'
+import { usePathname } from 'next/navigation'
 import Image from 'next/image'
 import Logo from '../assets/logo.svg'
 import { cx } from '../utils/cx'
@@ -22,7 +22,7 @@ export const NavItems = [
 ]
 
 const Header = () => {
-  const router = useRouter()
+  const pathname = usePathname()
   const [menuOpen, setMenuOpen] = React.useState(false)
 
   const MobileMenu = () => {
@@ -40,7 +40,7 @@ const Header = () => {
             >
               <p
                 className={cx(
-                  router.pathname === item.slug ? 'text-tm-red-brand' : '',
+                  pathname === item.slug ? 'text-tm-red-brand' : '',
                   'my-0 pb-2 font-bold'
                 )}
               >
@@ -111,7 +111,7 @@ const Header = () => {
               key={item.slug}
               className={cx(
                 baseClasses,
-                router.pathname === item.slug
+                pathname === item.slug
                   ? 'border-tm-red-brand border-b-2'
                   : 'border-transparent'
               )}

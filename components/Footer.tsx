@@ -1,9 +1,9 @@
-import { useRouter } from 'next/router'
+import { usePathname } from 'next/navigation'
 import { cx } from '../utils/cx'
 import { baseClasses, NavItems } from './Header'
 
 export default function Footer() {
-  const router = useRouter()
+  const pathname = usePathname()
   return (
     <footer className='py-6 md:py-10 px-4'>
       <h2 className='sr-only'>Footer</h2>
@@ -15,7 +15,7 @@ export default function Footer() {
                 key={item.slug}
                 className={cx(
                   baseClasses,
-                  router.pathname === item.slug
+                  pathname === item.slug
                     ? 'border-tm-red-brand border-b-2'
                     : 'border-transparent',
                   'block h-full'
