@@ -55,8 +55,8 @@ const Header = () => {
   }
 
   return (
-    <header className='inset-x-0 top-0 z-10 h-16 prose max-w-none border-b-2 md:border-b-0 border-slate-100 mb-10'>
-      <div className='flex justify-between items-center px-4 md:px-8 py-4 h-full'>
+    <header className='prose max-w-none border-b-2 md:border-b-0 border-slate-100 mb-10'>
+      <div className='flex justify-between items-center px-4 md:px-28 py-4 md:py-10 h-full'>
         <a className='no-underline' href='/' aria-label='Link to home page'>
           <Image className='my-0' src={Logo} alt='Readmill logo' />
         </a>

@@ -110,7 +110,7 @@ export default function Home({
     return 0
   })
   return (
-    <>
+    <div className='px-4 md:px-28'>
       <DocumentRenderer
         document={home.content}
         componentBlocks={{
@@ -118,6 +118,6 @@ export default function Home({
         }}
       />
       <AllPosts posts={orderedPostFeed} />
-    </>
+    </div>
   )
 }
