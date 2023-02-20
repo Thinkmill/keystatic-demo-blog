@@ -1,0 +1,219 @@
+The likely result: social sharing takes a hit (or, it takes forever). So, what if there was a solution to take the great content you’re engaging with, and share it to a social platform really quickly — and really easily?
+
+We recently created a version of this solution on a Thinkmill project, finding a way to improve the experience for users who prefer keyboard-based navigation when sharing to Twitter. This article will show you how to build your own using PopperJS and the native Selection API with improved accessibility for keyboard-based users thanks to your web browser’s Caret Browsing capability.
+
+## Getting started
+
+You can try this out now, by selecting this paragraph and, with any luck, being presented with a popover interface that builds the tweet, and takes you to Twitter:
+
+{% loopingVideo
+   src="shareToTwitter.mov"
+   caption="Share text selection to Twitter" /%}
+
+To build this feature we’ll need to accomplish the following:
+
+1. Show the user a popover interface when they’ve selected some text
+1. Get the page URL for the tweet
+1. Extract the selected text using the native selection API
+1. Build the tweet to send through to Twitter’s URL API
+
+We'll use [PopperJS](https://popper.js.org/) to display the sharing interface at the location where the user selected the text. We’ll also tie this up into a reusable hook in order to access it across many parts of a project. To do this we’ll break the feature into 2 parts:
+
+- A _hook_ called `useShareToSocial` that will do all the heavy lifting of building the tweet and sharing it to Twitter.
+- A _wrapper component_ which we'll use to handle the PopperJS reference for our popover.
+
+## Capturing selected text with the Selection API
+
+First things first, let's get text highlight selection in place. To do this we need to reach for the HTML spec's [Selection API](https://developer.mozilla.org/en-US/docs/Web/API/Selection). As well as getting the selected text we want to also get the coordinates to pass through to PopperJS.
+
+```javascript
+const selectionChange = React.useCallback(() => {
+  const selection = window.getSelection();
+  if (selection) {
+    const selectedText = selection.toString();
+    if (selection.isCollapsed || !selectedText.length) {
+      setSelectedText('');
+    }
+    setSelectedText(selectedText);
+  }
+  const virtualReference: NullableVirtualElement = {
+    getBoundingClientRect: () => {
+      return window
+        .getSelection()
+        ?.getRangeAt(0)
+        .getBoundingClientRect() as DOMRect | null;
+    }
+  };
+  setReferenceElement(virtualReference);
+}, [setSelectedText]);
+```
+
+In the above we are also resetting our text selection when we have de-selected text on the screen.
+
+## Extracting the page URL with window.location.href
+
+While we're at it, let's grab the URL of the page we're on to include it in the tweet. To do that we can call `window.location.href`. Then we pass that to the `encodeURIComponent()` method, which converts it to UTF-8 encoding to put in our URL bar.
+
+```JavaScript
+const pageUrl = encodeURIComponent(window.location.href)
+```
+
+## Supporting keyboard-based selection with Caret&nbsp;Browsing
+
+We can improve the accessibility of this feature by taking advantage of a browser setting called [Caret Browsing](https://www.guidingtech.com/caret-browsing-chrome-firefox-edge-how-to-use/). Available in Chrome, Firefox and Edge through the F7 keyboard shortcut - Caret Browsing lets users navigate the page and select text with directional keys like they are in a MS Word or Google document. We will also trigger the function to fire on text selection change.
+
+{% image
+   src="caretBrowsingSetting.png"
+   alt="Caret browsing setting in Google Chrome"
+   caption="Caret browsing setting in Google Chrome" /%}
+
+{% loopingVideo
+   src="shareViaCaret.mov"
+   caption="Using Caret Browsing to select text with keyboard and share to Twitter" /%}
+
+## Positioning the&nbsp;popover
+
+PopperJS provides us with a `virtualReference` of the selected text which we can use to position the popover. We’re going to use the coordinates Popper provides to set our reference element by passing it up to the parent to be set as the `ref`.
+
+```javascript
+return () => ({
+  width: 0,
+  height: 0,
+  top: y,
+  right: x,
+  bottom: y,
+  left: x,
+})
+```
+
+## Limiting tweets to 280 characters
+
+Now that we have the main pieces, we can put them together to build that tweet!
+
+We need to ensure that the selected text fits within Twitter’s tweet limit of 280 characters. By including the truncated text in the popover’s preview, we’ll avoid any last-minute surprises that the user might encounter when they go to share their tweet.
+
+```typescript
+const buildTweet = ({
+  pageUrl,
+  tweetContent,
+}: {
+  tweetContent: string | undefined
+  pageUrl: string
+}) => {
+  if (tweetContent !== undefined) {
+    const characterTotal = tweetContent.length + pageUrl.length
+    if (characterTotal + 19 < 280) {
+      return encodeURIComponent(`"${tweetContent}" – `)
+    }
+    const amountToTrim = 280 - (pageUrl.length + 19)
+    return encodeURIComponent(`"${tweetContent.slice(0, amountToTrim)}…" – `)
+  }
+  return ''
+}
+
+export const buildTargetLink = ({ quote }: ShareQuoteProps) => {
+  const pageUrl = encodeURIComponent(window.location.href)
+  const twitterLink = (tweetContent: string) =>
+    `https://twitter.com/intent/tweet?text=${tweetContent}&url=${pageUrl}&via=thethinkmill`
+  const tweet = buildTweet({
+    pageUrl,
+    tweetContent: quote,
+  })
+  return twitterLink(tweet)
+}
+```
+
+Let's go through some of the numbers in the snippet above:
+
+- We add 19 to the `characterTotal` to reflect the number of characters we wrap the text selection with `"" – via @thethinkmill`. If we have too many characters with the wrapping text included, we move to the alternate option in the function.
+- Where we have the 19 added to the page URL but we cut the string and truncate. We then run it through the `encodeURIComponent()` to make it appropriate to pass to the URL.
+
+## Sharing the tweet with Twitter's URL&nbsp;API
+
+Now that we have our page URL and our built tweet at the right length we can use Twitter's _**intent/tweet**_ URL to fire off the tweet. The function we have above builds this URL in this way:
+
+- `https://twitter.com/intent/tweet` – our main starting point
+- `text=${tweetContent}` – the built quote at the correct length
+- `&url=${pageUrl}` – the page URL we are on taken from window.location
+- `&via=thethinkmill` – adding the intended account to be tagged when someone shares from an article
+
+## Bringing it all&nbsp;together
+
+Now that we have done all the heavy lifting of selecting the text and building our tweet. All that's left is to wrap it all up and be ready to ship this feature. To do this we will make a component to wrap our content and trigger the share function. Below is the whole component and then we will go into it more in-depth.
+
+```typescript
+export const ShareableText = ({
+  wrapperId,
+  children,
+}: {
+  wrapperId: string
+  children: React.ReactElement
+}) => {
+  const { textElementRef, textElementSelectionChangeHandler, popupElement } =
+    useShareableText({ wrapperId })
+  const childrenWithProps = React.Children.map(children, (child) =>
+    React.cloneElement(child, {
+      id: wrapperId,
+      ref: textElementRef,
+      onMouseUp: textElementSelectionChangeHandler,
+    })
+  )
+  return (
+    <React.Fragment>
+      {childrenWithProps}
+      {popupElement}
+    </React.Fragment>
+  )
+}
+```
+
+We are pulling in the pieces we need out of the useShareableText hook. We grab the selection handler function and the relevant parts used by PopperJS.
+
+```javascript
+const { textElementRef, textElementSelectionChangeHandler, popupElement } =
+  useShareableText({ wrapperId })
+```
+
+Then we use the _**cloneElement**_ method from React and attach the required props needed.
+
+```javascript
+const childrenWithProps = React.Children.map(children, (child) =>
+  React.cloneElement(child, {
+    id: wrapperId,
+    ref: textElementRef,
+    onMouseUp: textElementSelectionChangeHandler,
+  })
+)
+```
+
+Now we can return a fragment with the props for the wrapper and the PopperJS element.
+
+```javascript
+return(
+  {childrenWithProps}
+  {popupElement}
+);
+```
+
+The result is a convenient wrapper around our content, which is the final piece of the share-to-Twitter puzzle. That gets placed around our content and we’re done.
+
+```javascript
+return <ShareableText wrapperId="shareable-wrapper">{content}</ShareableText>
+```
+
+## What we've&nbsp;learned
+
+We used the selection API to get selected text from the page. We took advantage of PopperJS’ `virtualReference` function to know where on the page our selected text was located. And finally, we built a neat function that creates the tweet with some wrapping text and fits it within Twitter‘s 280 character limit. The end result is a seamless sharing experience you can use across mouse, touch, and keyboard inputs to let readers share their favourite excerpt of an article without having to copy, paste and edit.
+
+## Working example
+
+You can [check out the CodeSandbox here](https://codesandbox.io/s/shareastweet-40n67j?file=/src/useShareToTwitter.tsx), and the [working example page here](https://40n67j.csb.app/). If you have more questions about the implementation you can find [me on Twitter](https://twitter.com/tomWritesCode).
+
+## Further reading
+
+To learn more about the tools and APIs used in this tutorial check out the links below.
+
+- [selection API](https://developer.mozilla.org/en-US/docs/Web/API/Selection)
+- [Popper VirtualReference](https://popper.js.org/docs/v2/virtual-elements/)
+- [getBoundingRectClient](https://developer.mozilla.org/en-US/docs/Web/API/Element/getBoundingClientRect)
+- [What is Caret Browsing?](https://www.guidingtech.com/caret-browsing-chrome-firefox-edge-how-to-use/)
