@@ -68,10 +68,9 @@ export default function Post({
               {dateFormatter(post.publishedDate, 'do MMM yyyy')}
             </p>
           )}
-          ·{' '}
-          {post.wordCount && post.wordCount !== 0 && (
-            <p className='my-0'>{readTime(post.wordCount)}</p>
-          )}
+          {post.wordCount && post.wordCount !== 0 ? (
+            <p className='my-0'>· {readTime(post.wordCount)}</p>
+          ) : null}
         </span>
       </div>
       {post.coverImage && (

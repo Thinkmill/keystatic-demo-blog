@@ -14,10 +14,14 @@ export default function Banner({
   }
 }) {
   return (
-    <div className='p-10 bg-slate-100 rounded-xl gap-10 flex flex-row items-center'>
-      <div>
-        <Image src={stars} aria-hidden='true' alt='stars icon' />
-      </div>
+    <div className='p-6 md:p-10 bg-slate-100 rounded-xl gap-4 md:gap-10 flex flex-col md:flex-row items-center'>
+      <Image
+        className='w-m-full self-start md:self-center my-0'
+        src={stars}
+        aria-hidden='true'
+        alt='stars icon'
+      />
+
       <div className='flex-row'>
         <p className='mt-0 mb-3 font-bold'>{heading}</p>
         <p className='text-base m-0'>

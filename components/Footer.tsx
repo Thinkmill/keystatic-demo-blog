@@ -5,19 +5,20 @@ import { baseClasses, NavItems } from './Header'
 export default function Footer() {
   const router = useRouter()
   return (
-    <footer className='pb-8 pt-11 md:pb-11'>
+    <footer className='py-6 md:py-10 px-4'>
       <h2 className='sr-only'>Footer</h2>
       <div className='mx-auto max-w-7xl'>
-        <ul className='flex flex-row justify-center gap-10'>
+        <ul className='flex flex-row justify-center gap-10 items-center'>
           {NavItems.map((item) => (
-            <li className='list-none' key={item.slug}>
+            <li className='list-none h-6' key={item.slug}>
               <a
                 key={item.slug}
                 className={cx(
                   baseClasses,
                   router.pathname === item.slug
-                    ? 'border-tm-red-brand'
-                    : 'border-transparent'
+                    ? 'border-tm-red-brand border-b-2'
+                    : 'border-transparent',
+                  'block h-full'
                 )}
                 href={item.slug}
               >
@@ -28,11 +29,11 @@ export default function Footer() {
         </ul>
         <div
           role='separator'
-          className='mx-auto flex h-6 w-full max-w-7xl justify-center items-center gap-2 py-20 px-20'
+          className='mx-auto flex h-6 w-full max-w-7xl justify-center items-center gap-2 py-6 md:py-10 md:px-20'
         >
           <div className='h-0.5 flex-1 bg-gray-300 ' />
         </div>
-        <div className=' flex flex-col gap-6 md:flex-row justify-between items-center max-w-7xl px-5 md:px-10'>
+        <div className=' flex flex-col gap-6 md:flex-row justify-between items-center max-w-7xl px-5 md:px-10 text-center md:text-left'>
           <div className='flex flex-col md:flex-row items-center gap-6'>
             <div className='flex space-x-4 md:justify-center xl:justify-start'>
               <a

@@ -22,11 +22,14 @@ export default function AllPosts({
   if (posts.length === 0) <h2>There are no posts available</h2>
 
   return (
-    <ul className='grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3'>
+    <ul className='grid grid-cols-1 gap-4 md:gap-6 md:grid-cols-2 xl:grid-cols-3 pl-0'>
       {posts.map((post, index) => {
         if (post.type === 'externalArticle') {
           return (
-            <li className='items-stretch list-none rounded' key={index}>
+            <li
+              className='items-stretch list-none rounded pl-0 my-0'
+              key={index}
+            >
               <a
                 href={post.directLink}
                 target='_blank'
@@ -59,7 +62,10 @@ export default function AllPosts({
         }
         if (post.type === 'post') {
           return (
-            <li className='items-stretch list-none rounded' key={index}>
+            <li
+              className='items-stretch list-none rounded pl-0 my-0'
+              key={index}
+            >
               <Link
                 href={`${post.slug}`}
                 className='no-underline hover:text-tm-red-brand group'
@@ -89,11 +95,11 @@ export default function AllPosts({
                         post.authors.map((author, index) => (
                           <p key={index}>{author}</p>
                         ))}
-                      {post.wordCount && (
+                      {post.wordCount && post.wordCount !== 0 ? (
                         <p className='px-2 py-1 border-2 border-slate-500 group-hover:border-tm-red-brand rounded-md'>
                           {readTime(post.wordCount)}
                         </p>
-                      )}
+                      ) : null}
                     </div>
                   </div>
                 </div>

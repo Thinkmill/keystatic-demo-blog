@@ -8,8 +8,8 @@ type InlineCTAProps = {
 
 const InlineCTA = (props: InlineCTAProps) => {
   return (
-    <div className='grid grid-cols-3 max-w-3xl mx-auto rounded-xl border-slate-300 border-2'>
-      <section className='p-8 col-span-2'>
+    <div className='grid grid-rows-2 md:grid-rows-1 md:grid-cols-3 max-w-3xl mx-auto rounded-xl border-slate-300 border-2'>
+      <section className='p-8 row-span row-span-1 md:col-span-2 border-b-2 md:border-b-0 md:border-r-2 border-slate-300'>
         <p className='text-xl mb-2'>{props.title}</p>
         <p className='mb-8'>{props.summary}</p>
         <Button
@@ -18,13 +18,7 @@ const InlineCTA = (props: InlineCTAProps) => {
           label={props.linkButton.label}
         />
       </section>
-      <div className='col-span-1 not-prose flex'>
-        <img
-          className=''
-          src='/thinkmill-cover.png'
-          alt='Thinkmill logo on a red background'
-        />
-      </div>
+      <div className='row-span-1 md:col-span-1 not-prose self-center bg-[url("/thinkmill-cover.png")] w-full h-full bg-cover bg-center rounded-b-xl md:rounded-bl-none md:rounded-r-xl' />
     </div>
   )
 }

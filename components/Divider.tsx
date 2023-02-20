@@ -5,7 +5,7 @@ const Divider = ({ noIcon = false }: { noIcon?: boolean }) => {
   return (
     <div
       role='separator'
-      className='mx-auto flex h-6 w-full max-w-xs items-center gap-2 py-20'
+      className='mx-auto flex h-6 w-full max-w-xs items-center gap-2 py-10 md:py-20'
     >
       {noIcon ? (
         <div className='h-0.5 flex-1 bg-gray-300 ' />
