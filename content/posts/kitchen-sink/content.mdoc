@@ -29,3 +29,20 @@ If you want to see how they're setup take a look at the `keystatic.tsx` file and
    linkLabel="Contact Us"
    link="https://thinkmill.com.au/contact"
    externalLink=true /%}
+
+## Image (with caption)
+
+This is a more styled version of just using a markdown image syntax including `alt` text and  `caption`
+
+{% image
+   src="learning-loop.jpg"
+   alt="Thinkmill Cover image"
+   caption="Oh wow what a nice caption" /%}
+
+## Looping Video
+
+This is running a `.mov` file in the style of a looping gif. Running the component this way we get to keep up the performance benefits of using a video file over a gif.
+
+{% loopingVideo
+   src="rendering-gif.mov"
+   caption="An example of SSR vs PSSR from another article on the Thinkmill website" /%}
