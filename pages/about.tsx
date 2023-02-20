@@ -24,7 +24,7 @@ export default function About({
   about,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
-    <>
+    <div className='mx-auto px-4 md:px-10'>
       <DocumentRenderer
         document={about.content}
         componentBlocks={{
@@ -41,6 +41,6 @@ export default function About({
           ),
         }}
       />
-    </>
+    </div>
   )
 }

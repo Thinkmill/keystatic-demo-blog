@@ -51,7 +51,7 @@ export default function Post({
   post,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
-    <div className='max-w-4xl mx-auto'>
+    <div className='max-w-4xl mx-auto px-4 md:px-10'>
       <div className='flex justify-between mt-0 mb-9'>
         <span className='flex gap-1'>
           {post.authors &&
