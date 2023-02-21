@@ -4,11 +4,12 @@ import config from '../keystatic'
 import dateFormatter from '../utils/dateFormatter'
 import readTime from '../utils/readTime'
 import { DocumentRenderer } from '@keystatic/core/renderer'
-import InlineCTA from '../components/InlineCTA'
+
 import Banner from '../components/Banner'
+import InlineCTA from '../components/InlineCTA'
 import Divider from '../components/Divider'
 import YouTubeEmbed from '../components/YouTubeEmbed'
-import { TweetEmbed } from '../components/TweetEmbed'
+import TweetEmbed from '../components/TweetEmbed'
 import LoopingVideo from '../components/LoopingVideo'
 import Image from '../components/Image'
 import Testimonial from '../components/Testimonial'
@@ -94,7 +95,7 @@ export default function Post({
               summary={props.summary}
               linkButton={{
                 externalLink: props.externalLink,
-                href: props.linkSlug,
+                href: props.href,
                 label: props.linkLabel,
               }}
             />

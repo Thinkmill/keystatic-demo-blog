@@ -2,8 +2,14 @@ import type { InferGetStaticPropsType } from 'next'
 import { createReader } from '@keystatic/core/reader'
 import config from '../keystatic'
 import { DocumentRenderer } from '@keystatic/core/renderer'
+
 import Banner from '../components/Banner'
+import InlineCTA from '../components/InlineCTA'
 import Divider from '../components/Divider'
+import YouTubeEmbed from '../components/YouTubeEmbed'
+import TweetEmbed from '../components/TweetEmbed'
+import LoopingVideo from '../components/LoopingVideo'
+import Image from '../components/Image'
 import Testimonial from '../components/Testimonial'
 
 export async function getStaticProps() {
@@ -29,6 +35,17 @@ export default function About({
       <DocumentRenderer
         document={about.content}
         componentBlocks={{
+          inlineCta: (props) => (
+            <InlineCTA
+              title={props.title}
+              summary={props.summary}
+              linkButton={{
+                externalLink: props.externalLink,
+                href: props.href,
+                label: props.linkLabel,
+              }}
+            />
+          ),
           divider: (props) => <Divider noIcon={props.noIcon} />,
           banner: (props) => (
             <Banner
@@ -39,6 +56,16 @@ export default function About({
                 label: props.externalLinkLabel,
               }}
             />
+          ),
+          youtubeEmbed: (props) => (
+            <YouTubeEmbed youtubeLink={props.youtubeLink} />
+          ),
+          tweetEmbed: (props) => <TweetEmbed tweet={props.tweet} />,
+          loopingVideo: (props) => (
+            <LoopingVideo src={props.src} caption={props.caption} />
+          ),
+          image: (props) => (
+            <Image src={props.src} alt={props.alt} caption={props.caption} />
           ),
           testimonial: (props) => (
             <Testimonial

@@ -1,14 +1,21 @@
 import type { InferGetStaticPropsType } from 'next'
 import { createReader } from '@keystatic/core/reader'
 import config from '../keystatic'
-import { DocumentRenderer } from '@keystatic/core/renderer'
 import AllPosts from '../components/AllPosts'
 import type {
   ExternalArticleWithTypeProps,
   PostsWithTypeProps,
   PostOrExternalArticleProps,
 } from '../components/AllPosts'
+import { DocumentRenderer } from '@keystatic/core/renderer'
+
+import Banner from '../components/Banner'
+import InlineCTA from '../components/InlineCTA'
 import Divider from '../components/Divider'
+import YouTubeEmbed from '../components/YouTubeEmbed'
+import TweetEmbed from '../components/TweetEmbed'
+import LoopingVideo from '../components/LoopingVideo'
+import Image from '../components/Image'
 import Testimonial from '../components/Testimonial'
 
 export type PostProps = InferGetStaticPropsType<
@@ -116,7 +123,46 @@ export default function Home({
         <DocumentRenderer
           document={home.content}
           componentBlocks={{
+            inlineCta: (props) => (
+              <InlineCTA
+                title={props.title}
+                summary={props.summary}
+                linkButton={{
+                  externalLink: props.externalLink,
+                  href: props.href,
+                  label: props.linkLabel,
+                }}
+              />
+            ),
             divider: (props) => <Divider noIcon={props.noIcon} />,
+            banner: (props) => (
+              <Banner
+                heading={props.heading}
+                bodyText={props.bodyText}
+                externalLink={{
+                  href: props.externalLinkHref,
+                  label: props.externalLinkLabel,
+                }}
+              />
+            ),
+            youtubeEmbed: (props) => (
+              <YouTubeEmbed youtubeLink={props.youtubeLink} />
+            ),
+            tweetEmbed: (props) => <TweetEmbed tweet={props.tweet} />,
+            loopingVideo: (props) => (
+              <LoopingVideo src={props.src} caption={props.caption} />
+            ),
+            image: (props) => (
+              <Image src={props.src} alt={props.alt} caption={props.caption} />
+            ),
+            testimonial: (props) => (
+              <Testimonial
+                quote={props.quote}
+                author={props.author}
+                workplaceOrSocial={props.workplaceOrSocial}
+                socialLink={props.socialLink}
+              />
+            ),
           }}
         />
       </div>

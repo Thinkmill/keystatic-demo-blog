@@ -35,7 +35,7 @@ const Button = ({ href, externalLink, label }: ButtonProps) => {
     )
   }
   return (
-    <Link className={buttonClasses} href={href}>
+    <Link href={href} className={buttonClasses}>
       {label}
     </Link>
   )
