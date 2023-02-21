@@ -1,7 +1,7 @@
 import type { InferGetStaticPropsType } from 'next'
-import { createReader } from 'keystatic/reader'
+import { createReader } from '@keystatic/core/reader'
 import config from '../keystatic'
-import { DocumentRenderer } from 'keystatic/renderer'
+import { DocumentRenderer } from '@keystatic/core/renderer'
 import AllPosts from '../components/AllPosts'
 import type {
   ExternalArticleWithTypeProps,

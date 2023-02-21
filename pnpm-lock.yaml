@@ -1,11 +1,12 @@
 lockfileVersion: 5.4
 
 specifiers:
+  '@keystatic/core': ^0.0.38
+  '@keystatic/next': ^0.0.1
   '@tailwindcss/typography': ^0.5.9
   '@types/react': ^18.0.26
   autoprefixer: ^10.4.13
   date-fns: ^2.29.3
-  keystatic: ^0.0.35
   next: ^13.1.1
   postcss: ^8.4.21
   react: ^18.2.0
@@ -14,9 +15,10 @@ specifiers:
   typescript: ^4.9.4
 
 dependencies:
+  '@keystatic/core': 0.0.38_q76c2b4vyoegvsbrcwkfvimnai
+  '@keystatic/next': 0.0.1_qvheoqphsqsjvvumflxhm62kia
   '@types/react': 18.0.26
   date-fns: 2.29.3
-  keystatic: 0.0.35_next@13.1.1
   next: 13.1.1_biqbaboplfbrettd7655fr4n2y
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
@@ -299,6 +301,117 @@ packages:
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
     dependencies:
       '@sinclair/typebox': 0.25.21
+    dev: false
+
+  /@keystatic/core/0.0.38_q76c2b4vyoegvsbrcwkfvimnai:
+    resolution: {integrity: sha512-kfvueJ/LKR8FyosyuE6ia4sE4NPN90eZpGxxFkuE+2nQVvSZz5KOUgn3RhsZvXyj4GZLzcny1KPhVe7wLmj+Ng==}
+    peerDependencies:
+      next: '13'
+      react: ^18.2.0
+      react-dom: ^18.2.0
+    dependencies:
+      '@babel/runtime': 7.20.7
+      '@braintree/sanitize-url': 6.0.2
+      '@emotion/css': 11.10.5
+      '@emotion/weak-memoize': 0.3.0
+      '@hapi/iron': 7.0.0
+      '@keystone-6/document-renderer': 1.1.2_react@18.2.0
+      '@markdoc/markdoc': 0.2.2_kzbn2opkn2327fwg5yzwzya5o4
+      '@react-aria/focus': 3.10.1_react@18.2.0
+      '@react-aria/i18n': 3.6.3_react@18.2.0
+      '@react-aria/overlays': 3.12.1_biqbaboplfbrettd7655fr4n2y
+      '@react-aria/visually-hidden': 3.6.1_react@18.2.0
+      '@react-stately/collections': 3.5.1_react@18.2.0
+      '@react-stately/list': 3.6.1_react@18.2.0
+      '@react-stately/overlays': 3.4.4_react@18.2.0
+      '@ts-gql/tag': 0.7.0_graphql@16.6.0
+      '@types/node': 16.11.13
+      '@types/react': 18.0.26
+      '@urql/exchange-auth': 1.0.0_graphql@16.6.0
+      '@urql/exchange-graphcache': 5.0.8_graphql@16.6.0
+      '@voussoir/action-group': 0.1.0_biqbaboplfbrettd7655fr4n2y
+      '@voussoir/badge': 0.1.0_biqbaboplfbrettd7655fr4n2y
+      '@voussoir/button': 0.1.1_biqbaboplfbrettd7655fr4n2y
+      '@voussoir/checkbox': 0.1.0_biqbaboplfbrettd7655fr4n2y
+      '@voussoir/combobox': 0.1.1_biqbaboplfbrettd7655fr4n2y
+      '@voussoir/core': 4.0.1_biqbaboplfbrettd7655fr4n2y
+      '@voussoir/dialog': 0.2.0_biqbaboplfbrettd7655fr4n2y
+      '@voussoir/drag-and-drop': 0.1.0_biqbaboplfbrettd7655fr4n2y
+      '@voussoir/field': 0.1.1_biqbaboplfbrettd7655fr4n2y
+      '@voussoir/icon': 0.1.0_biqbaboplfbrettd7655fr4n2y
+      '@voussoir/image': 0.1.0_biqbaboplfbrettd7655fr4n2y
+      '@voussoir/layout': 0.1.0_biqbaboplfbrettd7655fr4n2y
+      '@voussoir/link': 0.1.0_biqbaboplfbrettd7655fr4n2y
+      '@voussoir/list-view': 0.1.0_biqbaboplfbrettd7655fr4n2y
+      '@voussoir/listbox': 0.1.1_biqbaboplfbrettd7655fr4n2y
+      '@voussoir/menu': 0.1.0_biqbaboplfbrettd7655fr4n2y
+      '@voussoir/nav-list': 0.1.0_biqbaboplfbrettd7655fr4n2y
+      '@voussoir/notice': 0.1.0_biqbaboplfbrettd7655fr4n2y
+      '@voussoir/number-field': 0.1.1_biqbaboplfbrettd7655fr4n2y
+      '@voussoir/overlays': 0.1.0_biqbaboplfbrettd7655fr4n2y
+      '@voussoir/picker': 0.1.0_biqbaboplfbrettd7655fr4n2y
+      '@voussoir/progress': 0.1.0_biqbaboplfbrettd7655fr4n2y
+      '@voussoir/search-field': 0.1.2_biqbaboplfbrettd7655fr4n2y
+      '@voussoir/slots': 0.1.1_biqbaboplfbrettd7655fr4n2y
+      '@voussoir/ssr': 0.1.0_react@18.2.0
+      '@voussoir/style': 0.1.1_biqbaboplfbrettd7655fr4n2y
+      '@voussoir/table': 0.1.0_biqbaboplfbrettd7655fr4n2y
+      '@voussoir/tabs': 0.1.0_biqbaboplfbrettd7655fr4n2y
+      '@voussoir/text-field': 0.1.1_biqbaboplfbrettd7655fr4n2y
+      '@voussoir/tooltip': 0.1.0_biqbaboplfbrettd7655fr4n2y
+      '@voussoir/types': 0.1.0_biqbaboplfbrettd7655fr4n2y
+      '@voussoir/typography': 0.1.0_biqbaboplfbrettd7655fr4n2y
+      '@voussoir/utils': 2.0.0_biqbaboplfbrettd7655fr4n2y
+      apply-ref: 1.0.0
+      base64-js: 1.5.1
+      cookie: 0.5.0
+      emery: 1.4.1
+      fast-deep-equal: 3.1.3
+      fp-ts: 2.13.1
+      graphql: 16.6.0
+      io-ts: 2.2.20_fp-ts@2.13.1
+      io-ts-excess: 1.0.1_fp-ts@2.13.1
+      is-hotkey: 0.2.0
+      js-yaml: 4.1.0
+      lru-cache: 7.14.1
+      match-sorter: 6.3.1
+      mdast-util-from-markdown: 0.8.5
+      mdast-util-gfm-autolink-literal: 0.1.3
+      mdast-util-gfm-strikethrough: 0.2.3
+      micromark-extension-gfm-autolink-literal: 0.5.7
+      micromark-extension-gfm-strikethrough: 0.6.5
+      mime: 3.0.0
+      next: 13.1.1_biqbaboplfbrettd7655fr4n2y
+      pretty-format: 29.4.2
+      prismjs: 1.29.0
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+      scroll-into-view-if-needed: 3.0.3
+      slate: 0.81.3
+      slate-history: 0.66.0_slate@0.81.3
+      slate-hyperscript: 0.67.0_slate@0.81.3
+      slate-react: 0.81.0_njwfekudbehx2lwpmvgkrdxmhi
+      urql: 3.0.3_onqnqwb3ubg5opvemcqf7c2qhy
+      zod: 3.20.2
+    transitivePeerDependencies:
+      - '@babel/core'
+      - supports-color
+    dev: false
+
+  /@keystatic/next/0.0.1_qvheoqphsqsjvvumflxhm62kia:
+    resolution: {integrity: sha512-frg9+KBXkPpmb1UYo3RkIYk0OgemvoJq9MQE+6SNAovtERAw66RmnbJ33bM05hyKM0Xq6bB9Il/KSe1m3tsNsg==}
+    peerDependencies:
+      '@keystatic/core': '*'
+      next: '13'
+      react: ^18.2.0
+      react-dom: ^18.2.0
+    dependencies:
+      '@babel/runtime': 7.20.7
+      '@keystatic/core': 0.0.38_q76c2b4vyoegvsbrcwkfvimnai
+      '@types/react': 18.0.26
+      next: 13.1.1_biqbaboplfbrettd7655fr4n2y
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
     dev: false
 
   /@keystone-6/document-renderer/1.1.2_react@18.2.0:
@@ -3124,98 +3237,6 @@ packages:
 
   /json-parse-even-better-errors/2.3.1:
     resolution: {integrity: sha512-xyFwyhro/JEof6Ghe2iz2NcXoj2sloNsWr/XsERDK/oiPCfaNhl5ONfp+jQdAZRQQ0IJWNzH9zIZF7li91kh2w==}
-    dev: false
-
-  /keystatic/0.0.35_next@13.1.1:
-    resolution: {integrity: sha512-dK27hD7jL52zRclTr5/aNB9LF0ZGZlVjvySgB+h/JUzXW+A/2QnSvIi/uBK30CtN6MrHQjIEInlTpa49oft2Ng==}
-    peerDependencies:
-      next: '13'
-    dependencies:
-      '@babel/runtime': 7.20.7
-      '@braintree/sanitize-url': 6.0.2
-      '@emotion/css': 11.10.5
-      '@emotion/weak-memoize': 0.3.0
-      '@hapi/iron': 7.0.0
-      '@keystone-6/document-renderer': 1.1.2_react@18.2.0
-      '@markdoc/markdoc': 0.2.2_kzbn2opkn2327fwg5yzwzya5o4
-      '@react-aria/focus': 3.10.1_react@18.2.0
-      '@react-aria/overlays': 3.12.1_biqbaboplfbrettd7655fr4n2y
-      '@react-aria/visually-hidden': 3.6.1_react@18.2.0
-      '@react-stately/collections': 3.5.1_react@18.2.0
-      '@react-stately/list': 3.6.1_react@18.2.0
-      '@react-stately/overlays': 3.4.4_react@18.2.0
-      '@ts-gql/tag': 0.7.0_graphql@16.6.0
-      '@types/node': 16.11.13
-      '@types/react': 18.0.26
-      '@urql/exchange-auth': 1.0.0_graphql@16.6.0
-      '@urql/exchange-graphcache': 5.0.8_graphql@16.6.0
-      '@voussoir/action-group': 0.1.0_biqbaboplfbrettd7655fr4n2y
-      '@voussoir/badge': 0.1.0_biqbaboplfbrettd7655fr4n2y
-      '@voussoir/button': 0.1.1_biqbaboplfbrettd7655fr4n2y
-      '@voussoir/checkbox': 0.1.0_biqbaboplfbrettd7655fr4n2y
-      '@voussoir/combobox': 0.1.1_biqbaboplfbrettd7655fr4n2y
-      '@voussoir/core': 4.0.1_biqbaboplfbrettd7655fr4n2y
-      '@voussoir/dialog': 0.2.0_biqbaboplfbrettd7655fr4n2y
-      '@voussoir/drag-and-drop': 0.1.0_biqbaboplfbrettd7655fr4n2y
-      '@voussoir/field': 0.1.1_biqbaboplfbrettd7655fr4n2y
-      '@voussoir/icon': 0.1.0_biqbaboplfbrettd7655fr4n2y
-      '@voussoir/image': 0.1.0_biqbaboplfbrettd7655fr4n2y
-      '@voussoir/layout': 0.1.0_biqbaboplfbrettd7655fr4n2y
-      '@voussoir/link': 0.1.0_biqbaboplfbrettd7655fr4n2y
-      '@voussoir/list-view': 0.1.0_biqbaboplfbrettd7655fr4n2y
-      '@voussoir/listbox': 0.1.1_biqbaboplfbrettd7655fr4n2y
-      '@voussoir/menu': 0.1.0_biqbaboplfbrettd7655fr4n2y
-      '@voussoir/nav-list': 0.1.0_biqbaboplfbrettd7655fr4n2y
-      '@voussoir/notice': 0.1.0_biqbaboplfbrettd7655fr4n2y
-      '@voussoir/number-field': 0.1.1_biqbaboplfbrettd7655fr4n2y
-      '@voussoir/overlays': 0.1.0_biqbaboplfbrettd7655fr4n2y
-      '@voussoir/picker': 0.1.0_biqbaboplfbrettd7655fr4n2y
-      '@voussoir/progress': 0.1.0_biqbaboplfbrettd7655fr4n2y
-      '@voussoir/search-field': 0.1.2_biqbaboplfbrettd7655fr4n2y
-      '@voussoir/slots': 0.1.1_biqbaboplfbrettd7655fr4n2y
-      '@voussoir/ssr': 0.1.0_react@18.2.0
-      '@voussoir/style': 0.1.1_biqbaboplfbrettd7655fr4n2y
-      '@voussoir/table': 0.1.0_biqbaboplfbrettd7655fr4n2y
-      '@voussoir/tabs': 0.1.0_biqbaboplfbrettd7655fr4n2y
-      '@voussoir/text-field': 0.1.1_biqbaboplfbrettd7655fr4n2y
-      '@voussoir/tooltip': 0.1.0_biqbaboplfbrettd7655fr4n2y
-      '@voussoir/types': 0.1.0_biqbaboplfbrettd7655fr4n2y
-      '@voussoir/typography': 0.1.0_biqbaboplfbrettd7655fr4n2y
-      '@voussoir/utils': 2.0.0_biqbaboplfbrettd7655fr4n2y
-      apply-ref: 1.0.0
-      base64-js: 1.5.1
-      cookie: 0.5.0
-      emery: 1.4.1
-      fast-deep-equal: 3.1.3
-      fp-ts: 2.13.1
-      graphql: 16.6.0
-      io-ts: 2.2.20_fp-ts@2.13.1
-      io-ts-excess: 1.0.1_fp-ts@2.13.1
-      is-hotkey: 0.2.0
-      js-yaml: 4.1.0
-      lru-cache: 7.14.1
-      match-sorter: 6.3.1
-      mdast-util-from-markdown: 0.8.5
-      mdast-util-gfm-autolink-literal: 0.1.3
-      mdast-util-gfm-strikethrough: 0.2.3
-      micromark-extension-gfm-autolink-literal: 0.5.7
-      micromark-extension-gfm-strikethrough: 0.6.5
-      mime: 3.0.0
-      next: 13.1.1_biqbaboplfbrettd7655fr4n2y
-      pretty-format: 29.4.2
-      prismjs: 1.29.0
-      react: 18.2.0
-      react-dom: 18.2.0_react@18.2.0
-      scroll-into-view-if-needed: 3.0.3
-      slate: 0.81.3
-      slate-history: 0.66.0_slate@0.81.3
-      slate-hyperscript: 0.67.0_slate@0.81.3
-      slate-react: 0.81.0_njwfekudbehx2lwpmvgkrdxmhi
-      urql: 3.0.3_onqnqwb3ubg5opvemcqf7c2qhy
-      zod: 3.20.2
-    transitivePeerDependencies:
-      - '@babel/core'
-      - supports-color
     dev: false
 
   /lilconfig/2.0.6:
