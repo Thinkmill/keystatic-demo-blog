@@ -2,6 +2,7 @@ import dateFormatter from '../utils/dateFormatter'
 import type { PostProps, ExternalArticleProps } from '../pages'
 import readTime from '../utils/readTime'
 import Link from 'next/link'
+import maybeTruncateTextBlock from '../utils/maybeTruncateTextBlock'
 
 export type PostsWithTypeProps = PostProps & {
   type: 'post'
@@ -41,7 +42,7 @@ export default function AllPosts({
                     <div className='not-prose'>
                       <img
                         src={`/${post.coverImage}`}
-                        className='w-full rounded-t-md'
+                        className='w-full rounded-t-md aspect-video'
                         alt='Cover image'
                       />
                     </div>
@@ -53,7 +54,11 @@ export default function AllPosts({
                     <h3 className='mt-0 mb-3 group-hover:text-tm-red-brand'>
                       {post.title}
                     </h3>
-                    <p className='my-0'>{post.summary}</p>
+                    {post.summary && (
+                      <p className='my-0'>
+                        {maybeTruncateTextBlock(post.summary, 200)}
+                      </p>
+                    )}
                   </div>
                 </div>
               </a>
@@ -75,7 +80,7 @@ export default function AllPosts({
                     <div className='not-prose'>
                       <img
                         src={`/${post.coverImage}`}
-                        className='w-full rounded-t-md'
+                        className='w-full rounded-t-md aspect-video'
                         alt='Cover image'
                       />
                     </div>
@@ -89,14 +94,23 @@ export default function AllPosts({
                     <h3 className='mb-3 group-hover:text-tm-red-brand'>
                       {post.title}
                     </h3>
-                    <p className='mb-3'>{post.summary}</p>
-                    <div className='flex justify-between items-center'>
-                      {post.authors &&
-                        post.authors.map((author, index) => (
-                          <p key={index}>{author}</p>
-                        ))}
+                    {post.summary && (
+                      <p className='mb-3'>
+                        {maybeTruncateTextBlock(post.summary, 200)}
+                      </p>
+                    )}
+                    <div className='flex flex-row gap-1 justify-between items-center'>
+                      {post.authors && (
+                        <div className='flex-col'>
+                          {post.authors.map((author, index) => (
+                            <p className='mb-1 last:mb-0' key={index}>
+                              {author}
+                            </p>
+                          ))}
+                        </div>
+                      )}
                       {post.wordCount && post.wordCount !== 0 ? (
-                        <p className='px-2 py-1 border-2 border-slate-500 group-hover:border-tm-red-brand rounded-md'>
+                        <p className='shrink-0 px-2 py-1 border-2 border-slate-500 group-hover:border-tm-red-brand rounded-md'>
                           {readTime(post.wordCount)}
                         </p>
                       ) : null}

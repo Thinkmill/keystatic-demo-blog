@@ -111,8 +111,8 @@ export default function Home({
     return 0
   })
   return (
-    <div className='px-4 md:px-28'>
-      <div className='prose max-w-7xl'>
+    <div className='px-4 md:px-28 max-w-7xl mx-auto'>
+      <div className='prose max-w-none'>
         <DocumentRenderer
           document={home.content}
           componentBlocks={{
