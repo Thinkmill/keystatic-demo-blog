@@ -27,7 +27,7 @@ export default function AllPosts({
         if (post.type === 'externalArticle') {
           return (
             <li
-              className='items-stretch list-none rounded pl-0 my-0'
+              className='items-stretch list-none rounded pl-0 my-0 external-link'
               key={index}
             >
               <a
@@ -80,9 +80,9 @@ export default function AllPosts({
                       />
                     </div>
                   )}
-                  <div className='p-8 border-t-2 border-slate-100'>
+                  <div className='p-8 border-t-2  border-slate-100'>
                     {post.publishedDate && (
-                      <p className='mb-3'>
+                      <p className='mb-3 text-slate-500'>
                         {dateFormatter(post.publishedDate, 'do MMM yyyy')}
                       </p>
                     )}

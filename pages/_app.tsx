@@ -16,7 +16,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <div className='flex min-h-screen flex-col with-preflight'>
       <Header />
-      <main className='prose max-w-none flex flex-1 flex-col'>
+      <main className='max-w-none flex flex-1 flex-col'>
         <div className='flex-1'>
           <Component {...pageProps} />
         </div>

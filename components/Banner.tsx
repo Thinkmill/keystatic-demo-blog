@@ -14,7 +14,7 @@ export default function Banner({
   }
 }) {
   return (
-    <div className='p-6 md:p-10 bg-slate-100 rounded-xl gap-4 md:gap-10 flex flex-col md:flex-row items-center'>
+    <div className='p-6 md:p-10 bg-slate-100 rounded-xl gap-4 md:gap-10 flex flex-col md:flex-row items-center external-link'>
       <Image
         className='w-m-full self-start md:self-center my-0'
         src={stars}

@@ -6,6 +6,7 @@ import YouTubeEmbed from './components/YouTubeEmbed'
 import { TweetEmbed } from './components/TweetEmbed'
 import LoopingVideo from './components/LoopingVideo'
 import Image from './components/Image'
+import Testimonial from './components/Testimonial'
 
 export default config({
   storage: {
@@ -76,6 +77,32 @@ export default config({
                 }),
                 externalLinkLabel: fields.text({
                   label: 'Link Label',
+                }),
+              },
+            }),
+            testimonial: component({
+              label: 'Testimonial',
+              preview: (props) => (
+                <Testimonial
+                  quote={props.fields.quote.value}
+                  author={props.fields.author.value}
+                  workplaceOrSocial={props.fields.workplaceOrSocial.value}
+                  socialLink={props.fields.socialLink.value}
+                />
+              ),
+              schema: {
+                quote: fields.text({
+                  label: 'Quote',
+                  multiline: true,
+                }),
+                author: fields.text({
+                  label: 'Author',
+                }),
+                workplaceOrSocial: fields.text({
+                  label: 'Workplace or Social account name',
+                }),
+                socialLink: fields.url({
+                  label: 'Social media link',
                 }),
               },
             }),
@@ -227,6 +254,32 @@ export default config({
                   validation: { length: { min: 4 } },
                 }),
                 caption: fields.text({ label: 'Caption' }),
+              },
+            }),
+            testimonial: component({
+              label: 'Testimonial',
+              preview: (props) => (
+                <Testimonial
+                  quote={props.fields.quote.value}
+                  author={props.fields.author.value}
+                  workplaceOrSocial={props.fields.workplaceOrSocial.value}
+                  socialLink={props.fields.socialLink.value}
+                />
+              ),
+              schema: {
+                quote: fields.text({
+                  label: 'Quote',
+                  multiline: true,
+                }),
+                author: fields.text({
+                  label: 'Author',
+                }),
+                workplaceOrSocial: fields.text({
+                  label: 'Workplace or Social account name',
+                }),
+                socialLink: fields.url({
+                  label: 'Social media link',
+                }),
               },
             }),
           },

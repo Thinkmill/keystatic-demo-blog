@@ -9,6 +9,7 @@ import type {
   PostOrExternalArticleProps,
 } from '../components/AllPosts'
 import Divider from '../components/Divider'
+import Testimonial from '../components/Testimonial'
 
 export type PostProps = InferGetStaticPropsType<
   typeof getStaticProps
@@ -111,12 +112,14 @@ export default function Home({
   })
   return (
     <div className='px-4 md:px-28'>
-      <DocumentRenderer
-        document={home.content}
-        componentBlocks={{
-          divider: (props) => <Divider noIcon={props.noIcon} />,
-        }}
-      />
+      <div className='prose max-w-7xl'>
+        <DocumentRenderer
+          document={home.content}
+          componentBlocks={{
+            divider: (props) => <Divider noIcon={props.noIcon} />,
+          }}
+        />
+      </div>
       <AllPosts posts={orderedPostFeed} />
     </div>
   )

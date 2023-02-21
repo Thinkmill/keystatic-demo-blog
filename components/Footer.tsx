@@ -33,7 +33,7 @@ export default function Footer() {
         >
           <div className='h-0.5 flex-1 bg-gray-300 ' />
         </div>
-        <div className=' flex flex-col gap-6 md:flex-row justify-between items-center max-w-7xl px-5 md:px-10 text-center md:text-left'>
+        <div className=' flex flex-col gap-6 md:flex-row justify-between items-center max-w-7xl px-5 md:px-10 text-center md:text-left external-link'>
           <div className='flex flex-col md:flex-row items-center gap-6'>
             <div className='flex space-x-4 md:justify-center xl:justify-start'>
               <a

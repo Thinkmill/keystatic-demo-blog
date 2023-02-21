@@ -4,6 +4,7 @@ import config from '../keystatic'
 import { DocumentRenderer } from 'keystatic/renderer'
 import Banner from '../components/Banner'
 import Divider from '../components/Divider'
+import Testimonial from '../components/Testimonial'
 
 export async function getStaticProps() {
   const reader = createReader('', config)
@@ -24,7 +25,7 @@ export default function About({
   about,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
-    <div className='mx-auto px-4 md:px-10'>
+    <div className='mx-auto px-4 md:px-10 prose max-w-7xl'>
       <DocumentRenderer
         document={about.content}
         componentBlocks={{
@@ -37,6 +38,14 @@ export default function About({
                 href: props.externalLinkHref,
                 label: props.externalLinkLabel,
               }}
+            />
+          ),
+          testimonial: (props) => (
+            <Testimonial
+              quote={props.quote}
+              author={props.author}
+              workplaceOrSocial={props.workplaceOrSocial}
+              socialLink={props.socialLink}
             />
           ),
         }}

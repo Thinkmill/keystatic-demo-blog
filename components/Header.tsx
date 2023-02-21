@@ -61,7 +61,7 @@ const Header = () => {
           <Image className='my-0' src={Logo} alt='Readmill logo' />
         </a>
         {/* Mobile Hamburger Icon button */}
-        <nav className='-mr-2 min-[900px]:hidden'>
+        <nav className='-mr-2 min-[768px]:hidden'>
           <button
             type='button'
             className='inline-flex items-center justify-center rounded-md bg-white p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none'
@@ -105,7 +105,7 @@ const Header = () => {
           </button>
         </nav>
         {/* Desktop nav */}
-        <nav className='items-center space-x-8 hidden min-[900px]:flex'>
+        <nav className='items-center space-x-8 hidden min-[768px]:flex'>
           {NavItems.map((item) => (
             <a
               key={item.slug}
