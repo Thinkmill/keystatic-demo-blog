@@ -5,7 +5,7 @@ specifiers:
   '@types/react': ^18.0.26
   autoprefixer: ^10.4.13
   date-fns: ^2.29.3
-  keystatic: ^0.0.35
+  keystatic: ^0.0.36
   next: ^13.1.1
   postcss: ^8.4.21
   react: ^18.2.0
@@ -16,7 +16,7 @@ specifiers:
 dependencies:
   '@types/react': 18.0.26
   date-fns: 2.29.3
-  keystatic: 0.0.35_next@13.1.1
+  keystatic: 0.0.36_next@13.1.1
   next: 13.1.1_biqbaboplfbrettd7655fr4n2y
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
@@ -3126,8 +3126,8 @@ packages:
     resolution: {integrity: sha512-xyFwyhro/JEof6Ghe2iz2NcXoj2sloNsWr/XsERDK/oiPCfaNhl5ONfp+jQdAZRQQ0IJWNzH9zIZF7li91kh2w==}
     dev: false
 
-  /keystatic/0.0.35_next@13.1.1:
-    resolution: {integrity: sha512-dK27hD7jL52zRclTr5/aNB9LF0ZGZlVjvySgB+h/JUzXW+A/2QnSvIi/uBK30CtN6MrHQjIEInlTpa49oft2Ng==}
+  /keystatic/0.0.36_next@13.1.1:
+    resolution: {integrity: sha512-etItMKuAUhseQid81WhDbITF3xppRIsEMZkpjFqlS7/T1iR0M2KJE3bfxjFpAEC98QMzVSRPgWnBF44coV11nA==}
     peerDependencies:
       next: '13'
     dependencies:
@@ -3139,6 +3139,7 @@ packages:
       '@keystone-6/document-renderer': 1.1.2_react@18.2.0
       '@markdoc/markdoc': 0.2.2_kzbn2opkn2327fwg5yzwzya5o4
       '@react-aria/focus': 3.10.1_react@18.2.0
+      '@react-aria/i18n': 3.6.3_react@18.2.0
       '@react-aria/overlays': 3.12.1_biqbaboplfbrettd7655fr4n2y
       '@react-aria/visually-hidden': 3.6.1_react@18.2.0
       '@react-stately/collections': 3.5.1_react@18.2.0

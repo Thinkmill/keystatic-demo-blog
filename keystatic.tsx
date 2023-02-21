@@ -1,4 +1,10 @@
-import { collection, component, config, fields, singleton } from 'keystatic'
+import {
+  collection,
+  component,
+  config,
+  fields,
+  singleton,
+} from '@keystatic/core'
 import Banner from './components/Banner'
 import InlineCTA from './components/InlineCTA'
 import Divider from './components/Divider'
@@ -22,6 +28,15 @@ export default config({
       directory: 'content/pages/home',
       schema: {
         content: fields.document({
+          formatting: true,
+          dividers: true,
+          links: true,
+          layouts: [
+            [1, 1],
+            [1, 1, 1],
+            [2, 1],
+            [1, 2, 1],
+          ],
           label: 'Content',
           componentBlocks: {
             divider: component({
@@ -42,6 +57,15 @@ export default config({
       directory: 'content/pages/about',
       schema: {
         content: fields.document({
+          formatting: true,
+          dividers: true,
+          links: true,
+          layouts: [
+            [1, 1],
+            [1, 1, 1],
+            [2, 1],
+            [1, 2, 1],
+          ],
           label: 'Content',
           componentBlocks: {
             divider: component({
@@ -135,6 +159,15 @@ export default config({
           label: 'Word count',
         }),
         content: fields.document({
+          formatting: true,
+          dividers: true,
+          links: true,
+          layouts: [
+            [1, 1],
+            [1, 1, 1],
+            [2, 1],
+            [1, 2, 1],
+          ],
           label: 'Content',
           componentBlocks: {
             divider: component({
