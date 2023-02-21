@@ -1,4 +1,4 @@
-import createKeystaticAPIRoute from "keystatic/api";
-import config from "../../../keystatic";
+import { makeAPIRouteHandler } from '@keystatic/next/api'
+import config from '../../../keystatic'
 
-export default createKeystaticAPIRoute({ config });
+export default makeAPIRouteHandler({ config })
