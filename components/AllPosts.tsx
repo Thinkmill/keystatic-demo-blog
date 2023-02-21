@@ -56,7 +56,7 @@ export default function AllPosts({
                     </h3>
                     {post.summary && (
                       <p className='my-0'>
-                        {maybeTruncateTextBlock(post.summary, 200)}
+                        {maybeTruncateTextBlock(post.summary, 100)}
                       </p>
                     )}
                   </div>
@@ -96,7 +96,7 @@ export default function AllPosts({
                     </h3>
                     {post.summary && (
                       <p className='mb-3'>
-                        {maybeTruncateTextBlock(post.summary, 200)}
+                        {maybeTruncateTextBlock(post.summary, 100)}
                       </p>
                     )}
                     <div className='flex flex-row gap-1 justify-between items-center'>
