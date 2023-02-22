@@ -56,6 +56,33 @@ const Header = () => {
 
   return (
     <header className='prose max-w-none border-b-2 md:border-b-0 border-slate-100 mb-10'>
+      <div className='py-3 external-link bg-black text-white fill-white text-center text-sm'>
+        You're looking at a{' '}
+        <img
+          className='my-0 inline'
+          src='/keystatic.svg'
+          alt='Keystatic logo'
+        />{' '}
+        <strong className='text-white'>KEYSTATIC</strong> template.{' '}
+        <a
+          href=''
+          className='text-white hover:text-tm-red-brand'
+          target='_blank'
+          rel='noopener noreferrer'
+        >
+          Learn more
+        </a>{' '}
+        about Keystatic. Also, star us on{' '}
+        <a
+          href='https://github.com/Thinkmill/keystatic'
+          className='text-white hover:text-tm-red-brand'
+          target='_blank'
+          rel='noopener noreferrer'
+        >
+          Github
+        </a>
+        .
+      </div>
       <div className='flex justify-between items-center px-4 md:px-28 py-4 md:py-10 h-full'>
         <a className='no-underline' href='/' aria-label='Link to home page'>
           <Image className='my-0' src={Logo} alt='Readmill logo' />
