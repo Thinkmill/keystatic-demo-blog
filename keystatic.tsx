@@ -1,10 +1,4 @@
-import {
-  collection,
-  component,
-  config,
-  fields,
-  singleton,
-} from '@keystatic/core'
+import { collection, config, fields, singleton } from '@keystatic/core'
 import { ComponentBlocks } from './components/ComponentBlocks'
 
 export default config({
