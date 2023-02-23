@@ -1,8 +1,8 @@
 {
   "name": "@keystatic/template",
   "dependencies": {
-    "@keystatic/core": "^0.0.42",
-    "@keystatic/next": "^0.0.1",
+    "@keystatic/core": "^0.0.45",
+    "@keystatic/next": "^0.0.3",
     "@types/react": "^18.0.26",
     "date-fns": "^2.29.3",
     "next": "^13.1.1",
