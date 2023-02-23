@@ -7,4 +7,3 @@ It uses:
 - Keystatic
 - NextJS
 - TailwindCSS
-- date-fns
