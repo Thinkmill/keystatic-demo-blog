@@ -1,44 +1,44 @@
-import type { InferGetStaticPropsType, GetStaticPropsContext } from 'next'
-import { createReader } from '@keystatic/core/reader'
-import config from '../keystatic'
-import dateFormatter from '../utils/dateFormatter'
-import readTime from '../utils/readTime'
-import { DocumentRenderer } from '@keystatic/core/renderer'
+import type { InferGetStaticPropsType, GetStaticPropsContext } from "next";
+import { createReader } from "@keystatic/core/reader";
+import config from "../keystatic.config";
+import dateFormatter from "../utils/dateFormatter";
+import readTime from "../utils/readTime";
+import { DocumentRenderer } from "@keystatic/core/renderer";
 
-import Banner from '../components/Banner'
-import InlineCTA from '../components/InlineCTA'
-import Divider from '../components/Divider'
-import YouTubeEmbed from '../components/YouTubeEmbed'
-import TweetEmbed from '../components/TweetEmbed'
-import LoopingVideo from '../components/LoopingVideo'
-import Image from '../components/Image'
-import Testimonial from '../components/Testimonial'
+import Banner from "../components/Banner";
+import InlineCTA from "../components/InlineCTA";
+import Divider from "../components/Divider";
+import YouTubeEmbed from "../components/YouTubeEmbed";
+import TweetEmbed from "../components/TweetEmbed";
+import LoopingVideo from "../components/LoopingVideo";
+import Image from "../components/Image";
+import Testimonial from "../components/Testimonial";
 
 export async function getStaticPaths() {
-  const reader = createReader('', config)
+  const reader = createReader("", config);
   // Get collection of all posts
-  const postSlugs = await reader.collections.posts.list()
+  const postSlugs = await reader.collections.posts.list();
   return {
     // Generate paths for each post
     paths: postSlugs.map((slug) => ({
       params: { post: slug },
     })),
     fallback: false,
-  }
+  };
 }
 
 export const getStaticProps = async ({ params }: GetStaticPropsContext) => {
-  const slug = params?.post
+  const slug = params?.post;
 
-  if (typeof slug !== 'string') {
-    throw new Error('What? WHYYYY')
+  if (typeof slug !== "string") {
+    throw new Error("What? WHYYYY");
   }
 
-  const reader = createReader('', config)
+  const reader = createReader("", config);
   // Get data for post matching current slug
-  const post = await reader.collections.posts.read(slug)
+  const post = await reader.collections.posts.read(slug);
   // Get async data from 'content'
-  const content = await (post?.content() || [])
+  const content = await (post?.content() || []);
   return {
     props: {
       post: {
@@ -46,43 +46,43 @@ export const getStaticProps = async ({ params }: GetStaticPropsContext) => {
         content,
       },
     },
-  }
-}
+  };
+};
 
 export default function Post({
   post,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
-    <div className='max-w-4xl mx-auto px-4 md:px-10 prose'>
-      <div className='flex justify-between mt-0 mb-9'>
-        <span className='flex gap-1'>
+    <div className="max-w-4xl mx-auto px-4 md:px-10 prose">
+      <div className="flex justify-between mt-0 mb-9">
+        <span className="flex gap-1">
           {post.authors &&
             post.authors &&
             post.authors.map((author, index) => (
-              <p className='my-0' key={index}>
+              <p className="my-0" key={index}>
                 {author}
               </p>
             ))}
         </span>
-        <span className='flex gap-1'>
+        <span className="flex gap-1">
           {post.publishedDate && (
-            <p className='my-0'>
-              {dateFormatter(post.publishedDate, 'do MMM yyyy')}
+            <p className="my-0">
+              {dateFormatter(post.publishedDate, "do MMM yyyy")}
             </p>
           )}
           {post.wordCount && post.wordCount !== 0 ? (
-            <p className='my-0'>· {readTime(post.wordCount)}</p>
+            <p className="my-0">· {readTime(post.wordCount)}</p>
           ) : null}
         </span>
       </div>
       <h1>{post.title}</h1>
-      <p className='text-lg'>{post.summary}</p>
+      <p className="text-lg">{post.summary}</p>
       {post.coverImage && (
-        <div className='not-prose mb-10'>
+        <div className="not-prose mb-10">
           <img
             src={`/${post.coverImage}`}
-            className='w-full rounded-md'
-            alt='Cover image'
+            className="w-full rounded-md"
+            alt="Cover image"
           />
         </div>
       )}
@@ -132,5 +132,5 @@ export default function Post({
         }}
       />
     </div>
-  )
+  );
 }
