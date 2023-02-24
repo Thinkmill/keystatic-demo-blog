@@ -53,7 +53,7 @@ export default config({
     posts: collection({
       label: 'Posts',
       directory: 'content/posts',
-      getItemSlug: (data) => data.slug,
+      slugField: 'slug',
       schema: {
         title: fields.text({
           label: 'Title',
@@ -94,7 +94,7 @@ export default config({
     externalArticles: collection({
       label: 'External Article',
       directory: 'content/externalArticles',
-      getItemSlug: (data) => data.title,
+      slugField: 'title',
       schema: {
         title: fields.text({
           label: 'Title',
