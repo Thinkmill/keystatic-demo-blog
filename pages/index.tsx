@@ -46,6 +46,7 @@ async function getPostData() {
       const content = (await post?.content()) || [];
       return {
         ...post,
+        slug,
         content,
       };
     })
