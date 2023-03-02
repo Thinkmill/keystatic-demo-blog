@@ -1,3 +1,5 @@
+import Img from "next/image";
+
 import type { InferGetStaticPropsType, GetStaticPropsContext } from "next";
 import { createReader } from "@keystatic/core/reader";
 import config from "../keystatic.config";
@@ -37,6 +39,14 @@ export const getStaticProps = async ({ params }: GetStaticPropsContext) => {
   const reader = createReader("", config);
   // Get data for post matching current slug
   const post = await reader.collections.posts.read(slug);
+
+  const authorsData = await Promise.all(
+    post?.multiAuthors.map(async (authorSlug) => {
+      const author = await reader.collections.authors.read(authorSlug);
+      return { ...author, slug: authorSlug };
+    })
+  );
+
   // Get async data from 'content'
   const content = await (post?.content() || []);
   return {
@@ -45,15 +55,38 @@ export const getStaticProps = async ({ params }: GetStaticPropsContext) => {
         ...post,
         content,
       },
+      authors: authorsData,
     },
   };
 };
 
 export default function Post({
   post,
+  authors,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
     <div className="max-w-4xl mx-auto px-4 md:px-10 prose">
+      <div className="flex items-center gap-4 not-prose">
+        <ul className="flex -space-x-4">
+          {authors.map((author) => (
+            <li>
+              <Img
+                width={48}
+                height={48}
+                src={`/images/authors/${author.slug}/${author.avatar}`}
+                alt={`Avara for ${author.name}`}
+                className="h-12 w-12 rounded-full ring-1 ring-white"
+              />
+            </li>
+          ))}
+        </ul>
+
+        <p>
+          {new Intl.ListFormat("en-AU", {})
+            .format(authors.map((author) => author.name))
+            .replace("and", "&")}
+        </p>
+      </div>
       <div className="flex justify-between mt-0 mb-9">
         <span className="flex gap-1">
           {post.authors &&
