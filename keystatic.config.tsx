@@ -3,12 +3,11 @@ import { ComponentBlocks } from "./components/ComponentBlocks";
 
 export default config({
   storage: {
-    kind: "local",
-    // kind: "github",
-    // repo: {
-    //   owner: process.env.NEXT_PUBLIC_VERCEL_GIT_REPO_OWNER!,
-    //   name: process.env.NEXT_PUBLIC_VERCEL_GIT_REPO_SLUG!,
-    // },
+    kind: "github",
+    repo: {
+      owner: process.env.NEXT_PUBLIC_VERCEL_GIT_REPO_OWNER!,
+      name: process.env.NEXT_PUBLIC_VERCEL_GIT_REPO_SLUG!,
+    },
   },
   singletons: {
     home: singleton({
