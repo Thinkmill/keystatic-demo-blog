@@ -22,6 +22,10 @@ export type PostProps = InferGetStaticPropsType<
   typeof getStaticProps
 >["posts"][number];
 
+export type AuthorProps = InferGetStaticPropsType<
+  typeof getStaticProps
+>["authors"][number];
+
 export type ExternalArticleProps = InferGetStaticPropsType<
   typeof getStaticProps
 >["externalArticles"][number];
@@ -79,6 +83,7 @@ export async function getStaticProps() {
 
   return {
     props: {
+      foo: "bar",
       home: {
         ...homePage,
         content,

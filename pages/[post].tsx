@@ -40,12 +40,16 @@ export const getStaticProps = async ({ params }: GetStaticPropsContext) => {
   // Get data for post matching current slug
   const post = await reader.collections.posts.read(slug);
 
-  const authorsData = await Promise.all(
-    post?.multiAuthors.map(async (authorSlug) => {
-      const author = await reader.collections.authors.read(authorSlug);
-      return { ...author, slug: authorSlug };
-    })
-  );
+  const authorsData = post
+    ? await Promise.all(
+        post.authors.map(async (authorSlug) => {
+          const author = await reader.collections.authors.read(
+            authorSlug || ""
+          );
+          return { ...author, slug: authorSlug };
+        })
+      )
+    : [];
 
   // Get async data from 'content'
   const content = await (post?.content() || []);
@@ -60,43 +64,41 @@ export const getStaticProps = async ({ params }: GetStaticPropsContext) => {
   };
 };
 
-export default function Post({
-  post,
-  authors,
-}: InferGetStaticPropsType<typeof getStaticProps>) {
+export type PostProps = InferGetStaticPropsType<typeof getStaticProps>["post"];
+export type AuthorProps = InferGetStaticPropsType<
+  typeof getStaticProps
+>["authors"];
+
+type TheLot = {
+  post: PostProps;
+  authors: AuthorProps[];
+};
+
+export default function Post({ post, authors }: TheLot) {
+  const names = authors.map((author) => author.name);
+  const formattedNames = new Intl.ListFormat("en-AU")
+    .format(names)
+    .replace("and", "&");
   return (
     <div className="max-w-4xl mx-auto px-4 md:px-10 prose">
-      <div className="flex items-center gap-4 not-prose">
+      <div className="flex gap-4 items-center not-prose">
         <ul className="flex -space-x-4">
           {authors.map((author) => (
-            <li>
+            <li key={author.slug}>
               <Img
-                width={48}
-                height={48}
+                className="w-12 h-12 rounded-full ring-2 ring-white"
+                alt={`Avatar for ${author.name}`}
                 src={`/images/authors/${author.slug}/${author.avatar}`}
-                alt={`Avara for ${author.name}`}
-                className="h-12 w-12 rounded-full ring-1 ring-white"
+                width={96}
+                height={96}
               />
             </li>
           ))}
         </ul>
-
-        <p>
-          {new Intl.ListFormat("en-AU", {})
-            .format(authors.map((author) => author.name))
-            .replace("and", "&")}
-        </p>
+        {formattedNames}
       </div>
-      <div className="flex justify-between mt-0 mb-9">
-        <span className="flex gap-1">
-          {post.authors &&
-            post.authors &&
-            post.authors.map((author, index) => (
-              <p className="my-0" key={index}>
-                {author}
-              </p>
-            ))}
-        </span>
+
+      <div className="flex justify-between mt-4 mb-9">
         <span className="flex gap-1">
           {post.publishedDate && (
             <p className="my-0">

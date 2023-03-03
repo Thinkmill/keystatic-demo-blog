@@ -59,6 +59,11 @@ export default config({
         name: fields.slug({
           name: {
             label: "Author name",
+            validation: {
+              length: {
+                min: 1,
+              },
+            },
           },
         }),
         avatar: fields.image({
@@ -89,21 +94,16 @@ export default config({
         wordCount: fields.integer({
           label: "Word count",
         }),
-        multiAuthors: fields.array(
-          fields.relationship({ label: "Post authors", collection: "authors" }),
+        authors: fields.array(
+          fields.relationship({
+            label: "Post author",
+            collection: "authors",
+          }),
           {
             label: "Authors",
-            itemLabel: (data) => data.value || "Not Set",
+            itemLabel: (props) => props.value || "Please select an author",
           }
         ),
-        relatedAuthors: fields.relationship({
-          label: "Author",
-          collection: "authors",
-        }),
-        authors: fields.array(fields.text({ label: "Name" }), {
-          label: "Authors",
-          itemLabel: (props) => props.value,
-        }),
         content: fields.document({
           formatting: true,
           dividers: true,
