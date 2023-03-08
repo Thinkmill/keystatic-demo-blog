@@ -18,14 +18,18 @@ export type PostOrExternalArticleProps =
 
 export default function AllPosts({
   posts,
+  authors,
 }: {
   posts: PostOrExternalArticleProps[]
+  authors: any
 }) {
   if (posts.length === 0) return <h2>There are no posts available</h2>
+  console.log(authors)
 
   return (
     <ul className='grid grid-cols-1 gap-4 md:gap-6 md:grid-cols-2 xl:grid-cols-3 pl-0'>
       {posts.map((post, index) => {
+        console.log(post.authors)
         if (post.type === 'externalArticle') {
           return (
             <li

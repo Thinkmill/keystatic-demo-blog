@@ -191,7 +191,7 @@ export default function Home({
           }}
         />
       </div>
-      <AllPosts posts={orderedPostFeed} />
+      <AllPosts posts={orderedPostFeed} authors={authors} />
     </div>
   )
 }
