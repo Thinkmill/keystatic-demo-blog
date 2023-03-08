@@ -8,15 +8,7 @@ import type {
   PostOrExternalArticleProps,
 } from "../components/AllPosts";
 import { DocumentRenderer } from "@keystatic/core/renderer";
-
-import Banner from "../components/Banner";
-import InlineCTA from "../components/InlineCTA";
 import Divider from "../components/Divider";
-import YouTubeEmbed from "../components/YouTubeEmbed";
-import TweetEmbed from "../components/TweetEmbed";
-import LoopingVideo from "../components/LoopingVideo";
-import Image from "../components/Image";
-import Testimonial from "../components/Testimonial";
 
 export type PostProps = InferGetStaticPropsType<
   typeof getStaticProps
@@ -33,11 +25,11 @@ export type ExternalArticleProps = InferGetStaticPropsType<
 async function getHomeData() {
   const reader = createReader("", config);
   const homePage = await reader.singletons.home.read();
-  const homePageContent = await (homePage?.content() || []);
+  const homePageHeading = await (homePage?.heading() || []);
 
   return {
     ...homePage,
-    content: homePageContent,
+    heading: homePageHeading,
   };
 }
 
@@ -90,20 +82,16 @@ async function getAllAuthors() {
 }
 
 export async function getStaticProps() {
-  const [{ content, ...homePage }, posts, externalArticles, authors] =
-    await Promise.all([
-      getHomeData(),
-      getPostData(),
-      getExternalArticleData(),
-      getAllAuthors(),
-    ]);
+  const [home, posts, externalArticles, authors] = await Promise.all([
+    getHomeData(),
+    getPostData(),
+    getExternalArticleData(),
+    getAllAuthors(),
+  ]);
 
   return {
     props: {
-      home: {
-        ...homePage,
-        content,
-      },
+      home,
       posts,
       externalArticles,
       authors,
@@ -141,55 +129,29 @@ export default function Home({
 
     return 0;
   });
+
   return (
     <div className="px-4 md:px-28 max-w-7xl mx-auto">
-      <div className="prose max-w-none">
-        <DocumentRenderer
-          document={home.content}
-          componentBlocks={{
-            inlineCta: (props) => (
-              <InlineCTA
-                title={props.title}
-                summary={props.summary}
-                linkButton={{
-                  externalLink: props.externalLink,
-                  href: props.href,
-                  label: props.linkLabel,
-                }}
-              />
-            ),
-            divider: (props) => <Divider noIcon={props.noIcon} />,
-            banner: (props) => (
-              <Banner
-                heading={props.heading}
-                bodyText={props.bodyText}
-                externalLink={{
-                  href: props.externalLinkHref,
-                  label: props.externalLinkLabel,
-                }}
-              />
-            ),
-            youtubeEmbed: (props) => (
-              <YouTubeEmbed youtubeLink={props.youtubeLink} />
-            ),
-            tweetEmbed: (props) => <TweetEmbed tweet={props.tweet} />,
-            loopingVideo: (props) => (
-              <LoopingVideo src={props.src} caption={props.caption} />
-            ),
-            image: (props) => (
-              <Image src={props.src} alt={props.alt} caption={props.caption} />
-            ),
-            testimonial: (props) => (
-              <Testimonial
-                quote={props.quote}
-                author={props.author}
-                workplaceOrSocial={props.workplaceOrSocial}
-                socialLink={props.socialLink}
-              />
-            ),
-          }}
-        />
-      </div>
+      <DocumentRenderer
+        document={home.heading}
+        renderers={{
+          inline: {
+            bold: ({ children }) => {
+              return <span className="text-tm-red-brand">{children}</span>;
+            },
+          },
+          block: {
+            paragraph: ({ children }) => {
+              return (
+                <h1 className="text-center font-bold text-2xl max-w-xs sm:text-5xl sm:max-w-2xl lg:text-7xl lg:max-w-[60rem] mx-auto">
+                  {children}
+                </h1>
+              );
+            },
+          },
+        }}
+      />
+      <Divider />
       <AllPosts posts={orderedPostFeed} authors={authors} />
     </div>
   );

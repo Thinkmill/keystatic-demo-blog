@@ -5,45 +5,40 @@ import {
   GitHubConfig,
   LocalConfig,
   singleton,
-} from '@keystatic/core'
-import { ComponentBlocks } from './components/ComponentBlocks'
+} from "@keystatic/core";
+import { ComponentBlocks } from "./components/ComponentBlocks";
 
-const storage: LocalConfig['storage'] | GitHubConfig['storage'] =
-  process.env.NODE_ENV === 'development'
-    ? { kind: 'local' }
+const storage: LocalConfig["storage"] | GitHubConfig["storage"] =
+  process.env.NODE_ENV === "development"
+    ? { kind: "local" }
     : {
-        kind: 'github',
+        kind: "github",
         repo: {
           owner: process.env.NEXT_PUBLIC_VERCEL_GIT_REPO_OWNER!,
           name: process.env.NEXT_PUBLIC_VERCEL_GIT_REPO_SLUG!,
         },
-      }
+      };
 
 export default config({
   storage,
   singletons: {
     home: singleton({
-      label: 'Home',
-      path: 'content/pages/home/',
+      label: "Home",
+      path: "content/pages/home/",
       schema: {
-        content: fields.document({
-          formatting: true,
-          dividers: true,
-          links: true,
-          layouts: [
-            [1, 1],
-            [1, 1, 1],
-            [2, 1],
-            [1, 2, 1],
-          ],
-          label: 'Content',
-          componentBlocks: ComponentBlocks,
+        heading: fields.document({
+          formatting: {
+            inlineMarks: {
+              bold: true,
+            },
+          },
+          label: "Heading (note: text that is bolded will show up in red)",
         }),
       },
     }),
     about: singleton({
-      label: 'About',
-      path: 'content/pages/about/',
+      label: "About",
+      path: "content/pages/about/",
       schema: {
         content: fields.document({
           formatting: true,
@@ -55,7 +50,7 @@ export default config({
             [2, 1],
             [1, 2, 1],
           ],
-          label: 'Content',
+          label: "Content",
           componentBlocks: ComponentBlocks,
         }),
       },
@@ -63,13 +58,13 @@ export default config({
   },
   collections: {
     authors: collection({
-      label: 'Authors',
-      path: 'content/authors/*',
-      slugField: 'name',
+      label: "Authors",
+      path: "content/authors/*",
+      slugField: "name",
       schema: {
         name: fields.slug({
           name: {
-            label: 'Name',
+            label: "Name",
             validation: {
               length: {
                 min: 1,
@@ -78,41 +73,41 @@ export default config({
           },
         }),
         avatar: fields.image({
-          label: 'Author avatar',
-          directory: 'public/images/authors',
+          label: "Author avatar",
+          directory: "public/images/authors",
         }),
       },
     }),
     posts: collection({
-      label: 'Posts',
-      path: 'content/posts/*/',
-      slugField: 'slug',
+      label: "Posts",
+      path: "content/posts/*/",
+      slugField: "slug",
       schema: {
         title: fields.text({
-          label: 'Title',
+          label: "Title",
           validation: { length: { min: 4 } },
         }),
         slug: fields.text({
-          label: 'Slug',
+          label: "Slug",
           validation: { length: { min: 4 } },
         }),
         summary: fields.text({
-          label: 'Summary',
+          label: "Summary",
           validation: { length: { min: 4 } },
         }),
-        publishedDate: fields.date({ label: 'Published Date' }),
-        coverImage: fields.text({ label: 'Image' }),
+        publishedDate: fields.date({ label: "Published Date" }),
+        coverImage: fields.text({ label: "Image" }),
         wordCount: fields.integer({
-          label: 'Word count',
+          label: "Word count",
         }),
         authors: fields.array(
           fields.relationship({
-            label: 'Post author',
-            collection: 'authors',
+            label: "Post author",
+            collection: "authors",
           }),
           {
-            label: 'Authors',
-            itemLabel: (props) => props.value || 'Please select an author',
+            label: "Authors",
+            itemLabel: (props) => props.value || "Please select an author",
           }
         ),
         content: fields.document({
@@ -125,36 +120,36 @@ export default config({
             [2, 1],
             [1, 2, 1],
           ],
-          label: 'Content',
+          label: "Content",
           componentBlocks: ComponentBlocks,
         }),
       },
     }),
     externalArticles: collection({
-      label: 'External Article',
-      path: 'content/externalArticles/*/',
-      slugField: 'title',
+      label: "External Article",
+      path: "content/externalArticles/*/",
+      slugField: "title",
       schema: {
         title: fields.text({
-          label: 'Title',
+          label: "Title",
           validation: { length: { min: 4 } },
         }),
         directLink: fields.url({
-          label: 'Article Link',
+          label: "Article Link",
         }),
         source: fields.text({
-          label: 'Link Source',
-          defaultValue: 'Read more.',
+          label: "Link Source",
+          defaultValue: "Read more.",
         }),
         coverImage: fields.text({
-          label: 'Cover Image',
+          label: "Cover Image",
         }),
         summary: fields.text({
-          label: 'Summary',
+          label: "Summary",
           validation: { length: { min: 4, max: 200 } },
         }),
-        publishedDate: fields.date({ label: 'Published Date' }),
+        publishedDate: fields.date({ label: "Published Date" }),
       },
     }),
   },
-})
+});
