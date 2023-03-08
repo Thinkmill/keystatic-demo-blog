@@ -24,12 +24,10 @@ export default function AllPosts({
   authors: any
 }) {
   if (posts.length === 0) return <h2>There are no posts available</h2>
-  console.log(authors)
 
   return (
     <ul className='grid grid-cols-1 gap-4 md:gap-6 md:grid-cols-2 xl:grid-cols-3 pl-0'>
       {posts.map((post, index) => {
-        console.log(post.authors)
         if (post.type === 'externalArticle') {
           return (
             <li
@@ -71,6 +69,9 @@ export default function AllPosts({
           )
         }
         if (post.type === 'post') {
+          const filteredAuthors = authors.filter((el) =>
+            post.authors?.includes(el.slug)
+          )
           return (
             <li
               className='items-stretch list-none rounded pl-0 my-0'
@@ -105,7 +106,9 @@ export default function AllPosts({
                       </p>
                     )}
                     <div className='flex flex-row gap-1 justify-between items-center'>
-                      {/* <AvatarList authors={post.authors} /> */}
+                      <div className='flex gap-4 items-center not-prose'>
+                        <AvatarList authors={filteredAuthors} />
+                      </div>
                       {post.wordCount && post.wordCount !== 0 ? (
                         <p className='my-0 shrink-0 px-2 py-1 border-2 border-slate-500 group-hover:border-tm-red-brand rounded-md'>
                           {readTime(post.wordCount)}

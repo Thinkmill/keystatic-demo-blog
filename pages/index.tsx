@@ -81,11 +81,12 @@ async function getAllAuthors() {
   const authorsList = await reader.collections.authors.list()
   const allAuthors = await Promise.all(
     authorsList.map(async (slug) => {
-      return { ...(await reader.collections.authors.read(slug)) }
+      return await reader.collections.authors.read(slug)
     })
   )
-
-  return allAuthors
+  return authorsList.map((el, index) => {
+    return { slug: el, ...allAuthors[index] }
+  })
 }
 
 export async function getStaticProps() {
@@ -96,8 +97,6 @@ export async function getStaticProps() {
       getExternalArticleData(),
       getAllAuthors(),
     ])
-
-  console.log(authors)
 
   return {
     props: {
