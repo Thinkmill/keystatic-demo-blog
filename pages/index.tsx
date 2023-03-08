@@ -1,81 +1,102 @@
-import type { InferGetStaticPropsType } from "next";
-import { createReader } from "@keystatic/core/reader";
-import config from "../keystatic.config";
-import AllPosts from "../components/AllPosts";
+import type { InferGetStaticPropsType } from 'next'
+import { createReader } from '@keystatic/core/reader'
+import config from '../keystatic.config'
+import AllPosts from '../components/AllPosts'
 import type {
   ExternalArticleWithTypeProps,
   PostsWithTypeProps,
   PostOrExternalArticleProps,
-} from "../components/AllPosts";
-import { DocumentRenderer } from "@keystatic/core/renderer";
+} from '../components/AllPosts'
+import { DocumentRenderer } from '@keystatic/core/renderer'
 
-import Banner from "../components/Banner";
-import InlineCTA from "../components/InlineCTA";
-import Divider from "../components/Divider";
-import YouTubeEmbed from "../components/YouTubeEmbed";
-import TweetEmbed from "../components/TweetEmbed";
-import LoopingVideo from "../components/LoopingVideo";
-import Image from "../components/Image";
-import Testimonial from "../components/Testimonial";
+import Banner from '../components/Banner'
+import InlineCTA from '../components/InlineCTA'
+import Divider from '../components/Divider'
+import YouTubeEmbed from '../components/YouTubeEmbed'
+import TweetEmbed from '../components/TweetEmbed'
+import LoopingVideo from '../components/LoopingVideo'
+import Image from '../components/Image'
+import Testimonial from '../components/Testimonial'
 
 export type PostProps = InferGetStaticPropsType<
   typeof getStaticProps
->["posts"][number];
+>['posts'][number]
+
+export type AuthorProps = InferGetStaticPropsType<
+  typeof getStaticProps
+>['authors'][number]
 
 export type ExternalArticleProps = InferGetStaticPropsType<
   typeof getStaticProps
->["externalArticles"][number];
+>['externalArticles'][number]
 
 async function getHomeData() {
-  const reader = createReader("", config);
-  const homePage = await reader.singletons.home.read();
-  const homePageContent = await (homePage?.content() || []);
+  const reader = createReader('', config)
+  const homePage = await reader.singletons.home.read()
+  const homePageContent = await (homePage?.content() || [])
 
   return {
     ...homePage,
     content: homePageContent,
-  };
+  }
 }
 
 async function getPostData() {
-  const reader = createReader("", config);
-  const postSlugs = await reader.collections.posts.list();
+  const reader = createReader('', config)
+  const postSlugs = await reader.collections.posts.list()
   const postData = await Promise.all(
     postSlugs.map(async (slug) => {
-      const post = await reader.collections.posts.read(slug);
-      const content = (await post?.content()) || [];
+      const post = await reader.collections.posts.read(slug)
+      const content = (await post?.content()) || []
       return {
         ...post,
         slug,
         content,
-      };
+      }
     })
-  );
+  )
 
-  return postData;
+  return postData
 }
 
 async function getExternalArticleData() {
-  const reader = createReader("", config);
-  const externalArticles = await reader.collections.externalArticles.list();
+  const reader = createReader('', config)
+  const externalArticles = await reader.collections.externalArticles.list()
   const externalArticleData = await Promise.all(
     externalArticles.map(async (slug) => {
       const externalArticle = await reader.collections.externalArticles.read(
         slug
-      );
+      )
 
       return {
         ...externalArticle,
-      };
+      }
     })
-  );
-  return externalArticleData;
+  )
+  return externalArticleData
+}
+
+async function getAllAuthors() {
+  const reader = createReader('', config)
+  const authorsList = await reader.collections.authors.list()
+  const allAuthors = await Promise.all(
+    authorsList.map(async (slug) => {
+      return await reader.collections.authors.read(slug)
+    })
+  )
+  return authorsList.map((el, index) => {
+    return { slug: el, ...allAuthors[index] }
+  })
 }
 
 export async function getStaticProps() {
-  const [{ content, ...homePage }, posts, externalArticles] = await Promise.all(
-    [getHomeData(), getPostData(), getExternalArticleData()]
-  );
+  const [{ content, ...homePage }, posts, externalArticles, authors] =
+    await Promise.all([
+      getHomeData(),
+      getPostData(),
+      getExternalArticleData(),
+      getAllAuthors(),
+    ])
 
   return {
     props: {
@@ -85,42 +106,44 @@ export async function getStaticProps() {
       },
       posts,
       externalArticles,
+      authors,
     },
-  };
+  }
 }
 
 export default function Home({
   home,
   posts,
   externalArticles,
+  authors,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   const PostsWithType = posts.map(
-    (post): PostsWithTypeProps => ({ type: "post", ...post })
-  );
+    (post): PostsWithTypeProps => ({ type: 'post', ...post })
+  )
   const ExternalArticleWithType = externalArticles.map(
     (article): ExternalArticleWithTypeProps => ({
-      type: "externalArticle",
+      type: 'externalArticle',
       ...article,
     })
-  );
+  )
 
   const allPosts: PostOrExternalArticleProps[] = [
     ...PostsWithType,
     ...ExternalArticleWithType,
-  ];
+  ]
   const orderedPostFeed = allPosts.sort((a, b) => {
     if (a?.publishedDate && b?.publishedDate) {
       return new Date(a.publishedDate).getTime() <
         new Date(b.publishedDate).getTime()
         ? 1
-        : -1;
+        : -1
     }
 
-    return 0;
-  });
+    return 0
+  })
   return (
-    <div className="px-4 md:px-28 max-w-7xl mx-auto">
-      <div className="prose max-w-none">
+    <div className='px-4 md:px-28 max-w-7xl mx-auto'>
+      <div className='prose max-w-none'>
         <DocumentRenderer
           document={home.content}
           componentBlocks={{
@@ -167,7 +190,7 @@ export default function Home({
           }}
         />
       </div>
-      <AllPosts posts={orderedPostFeed} />
+      <AllPosts posts={orderedPostFeed} authors={authors} />
     </div>
-  );
+  )
 }

@@ -13,7 +13,6 @@ export default function Banner({
     label: string
   }
 }) {
-  console.log(externalLink)
   return (
     <div className='p-6 md:p-10 bg-slate-100 rounded-xl gap-4 md:gap-10 flex flex-col md:flex-row items-center external-link'>
       <Image

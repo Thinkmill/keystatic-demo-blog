@@ -1,5 +1,4 @@
 title: Building a share text selection to Twitter feature in React
-slug: share-text-selection-to-twitter
 summary: >-
   Medium has a feature that lets readers share selected article text straight to
   Twitter — without having to copy, paste and edit. It’s a cool way to support
@@ -9,7 +8,5 @@ summary: >-
 publishedDate: '2022-12-13'
 coverImage: shareToTwitter.png
 wordCount: 1436
-content:
-  files: []
 authors:
-  - Tom Stothard Whitaker
+  - tom-stothard-whitaker

@@ -1,13 +1,10 @@
 title: The Thinkmill Learning Loop
-slug: the-learning-loop
 summary: >-
   How the work we do in open source and client services drives our craft to new
   levels.
 publishedDate: '2023-02-10'
 coverImage: learning-loop.jpg
 wordCount: 359
-content:
-  files: []
 authors:
-  - Boris Bozic
-  - Jed Watson
+  - boris-bozic
+  - jed-watson

@@ -62,6 +62,27 @@ export default config({
     }),
   },
   collections: {
+    authors: collection({
+      label: 'Authors',
+      path: 'content/authors/*',
+      slugField: 'name',
+      schema: {
+        name: fields.slug({
+          name: {
+            label: 'Name',
+            validation: {
+              length: {
+                min: 1,
+              },
+            },
+          },
+        }),
+        avatar: fields.image({
+          label: 'Author avatar',
+          directory: 'public/images/authors',
+        }),
+      },
+    }),
     posts: collection({
       label: 'Posts',
       path: 'content/posts/*/',
@@ -84,10 +105,16 @@ export default config({
         wordCount: fields.integer({
           label: 'Word count',
         }),
-        authors: fields.array(fields.text({ label: 'Name' }), {
-          label: 'Authors',
-          itemLabel: (props) => props.value,
-        }),
+        authors: fields.array(
+          fields.relationship({
+            label: 'Post author',
+            collection: 'authors',
+          }),
+          {
+            label: 'Authors',
+            itemLabel: (props) => props.value || 'Please select an author',
+          }
+        ),
         content: fields.document({
           formatting: true,
           dividers: true,
