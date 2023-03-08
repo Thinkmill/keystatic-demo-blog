@@ -1,21 +1,21 @@
-import type { InferGetStaticPropsType } from 'next'
-import { createReader } from '@keystatic/core/reader'
-import config from '../keystatic.config'
-import { DocumentRenderer } from '@keystatic/core/renderer'
+import type { InferGetStaticPropsType } from "next";
+import { createReader } from "@keystatic/core/reader";
+import config from "../keystatic.config";
+import { DocumentRenderer } from "@keystatic/core/renderer";
 
-import Banner from '../components/Banner'
-import InlineCTA from '../components/InlineCTA'
-import Divider from '../components/Divider'
-import YouTubeEmbed from '../components/YouTubeEmbed'
-import TweetEmbed from '../components/TweetEmbed'
-import LoopingVideo from '../components/LoopingVideo'
-import Image from '../components/Image'
-import Testimonial from '../components/Testimonial'
+import Banner from "../components/Banner";
+import InlineCTA from "../components/InlineCTA";
+import Divider from "../components/Divider";
+import YouTubeEmbed from "../components/YouTubeEmbed";
+import TweetEmbed from "../components/TweetEmbed";
+import LoopingVideo from "../components/LoopingVideo";
+import Image from "../components/Image";
+import Testimonial from "../components/Testimonial";
 
 export async function getStaticProps() {
-  const reader = createReader('', config)
-  const aboutPage = await reader.singletons.about.read()
-  const aboutPageContent = await (aboutPage?.content() || [])
+  const reader = createReader("", config);
+  const aboutPage = await reader.singletons.about.read();
+  const aboutPageContent = await (aboutPage?.content() || []);
 
   return {
     props: {
@@ -24,14 +24,14 @@ export async function getStaticProps() {
         content: aboutPageContent,
       },
     },
-  }
+  };
 }
 
 export default function About({
   about,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
-    <div className='mx-auto px-4 md:px-10 prose max-w-7xl'>
+    <div className="mx-auto px-4 md:px-10 prose max-w-7xl">
       <DocumentRenderer
         document={about.content}
         componentBlocks={{
@@ -78,5 +78,5 @@ export default function About({
         }}
       />
     </div>
-  )
+  );
 }
