@@ -64,12 +64,12 @@ export default config({
   collections: {
     authors: collection({
       label: 'Authors',
-      path: 'content/authors/*/',
+      path: 'content/authors/*',
       slugField: 'name',
       schema: {
         name: fields.slug({
           name: {
-            label: 'Author name',
+            label: 'Name',
             validation: {
               length: {
                 min: 1,
