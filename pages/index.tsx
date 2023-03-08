@@ -76,20 +76,38 @@ async function getExternalArticleData() {
   return externalArticleData
 }
 
-export async function getStaticProps() {
-  const [{ content, ...homePage }, posts, externalArticles] = await Promise.all(
-    [getHomeData(), getPostData(), getExternalArticleData()]
+async function getAllAuthors() {
+  const reader = createReader('', config)
+  const authorsList = await reader.collections.authors.list()
+  const allAuthors = await Promise.all(
+    authorsList.map(async (slug) => {
+      return { ...(await reader.collections.authors.read(slug)) }
+    })
   )
+
+  return allAuthors
+}
+
+export async function getStaticProps() {
+  const [{ content, ...homePage }, posts, externalArticles, authors] =
+    await Promise.all([
+      getHomeData(),
+      getPostData(),
+      getExternalArticleData(),
+      getAllAuthors(),
+    ])
+
+  console.log(authors)
 
   return {
     props: {
-      foo: 'bar',
       home: {
         ...homePage,
         content,
       },
       posts,
       externalArticles,
+      authors,
     },
   }
 }
@@ -98,6 +116,7 @@ export default function Home({
   home,
   posts,
   externalArticles,
+  authors,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   const PostsWithType = posts.map(
     (post): PostsWithTypeProps => ({ type: 'post', ...post })

@@ -3,6 +3,7 @@ import type { PostProps, ExternalArticleProps } from '../pages'
 import readTime from '../utils/readTime'
 import Link from 'next/link'
 import maybeTruncateTextBlock from '../utils/maybeTruncateTextBlock'
+import AvatarList from './AvatarList'
 
 export type PostsWithTypeProps = PostProps & {
   type: 'post'
@@ -20,7 +21,7 @@ export default function AllPosts({
 }: {
   posts: PostOrExternalArticleProps[]
 }) {
-  if (posts.length === 0) <h2>There are no posts available</h2>
+  if (posts.length === 0) return <h2>There are no posts available</h2>
 
   return (
     <ul className='grid grid-cols-1 gap-4 md:gap-6 md:grid-cols-2 xl:grid-cols-3 pl-0'>
@@ -100,15 +101,7 @@ export default function AllPosts({
                       </p>
                     )}
                     <div className='flex flex-row gap-1 justify-between items-center'>
-                      {post.authors && (
-                        <div className='flex-col'>
-                          {post.authors.map((author, index) => (
-                            <p className='mt-0 mb-1 last:mb-0' key={index}>
-                              {author}
-                            </p>
-                          ))}
-                        </div>
-                      )}
+                      {/* <AvatarList authors={post.authors} /> */}
                       {post.wordCount && post.wordCount !== 0 ? (
                         <p className='my-0 shrink-0 px-2 py-1 border-2 border-slate-500 group-hover:border-tm-red-brand rounded-md'>
                           {readTime(post.wordCount)}
