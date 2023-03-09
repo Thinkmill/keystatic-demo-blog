@@ -50,7 +50,6 @@ async function getPostData() {
     postSlugs.map(async (slug) => {
       const post = await reader.collections.posts.read(slug);
       const content = (await post?.content()) || [];
-      console.log(post);
 
       return {
         ...post,
@@ -139,7 +138,6 @@ export default function Home({
 
     return 0;
   });
-  console.log(posts);
 
   return (
     <div className="px-4 md:px-28 max-w-7xl mx-auto">

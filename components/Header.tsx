@@ -78,8 +78,12 @@ const Header = () => {
     <header className="prose max-w-none border-b-2 md:border-b-0 border-slate-100 mb-10 md:mb-20">
       <KeystaticBanner />
       <div className="flex justify-between items-center px-4 md:px-28 py-4 md:py-10 h-full">
-        <a className="no-underline" href="/" aria-label="Link to home page">
-          🌎 Solaris Daily News
+        <a
+          className="no-underline font-serif text-xl font-bold"
+          href="/"
+          aria-label="Link to home page"
+        >
+          🌎 &nbsp; Solaris Daily News
         </a>
         {/* Mobile Hamburger Icon button */}
         <nav className="-mr-2 min-[768px]:hidden">
