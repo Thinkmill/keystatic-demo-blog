@@ -1,11 +1,8 @@
 import type { InferGetStaticPropsType } from "next";
 import { createReader } from "@keystatic/core/reader";
 import config from "../keystatic.config";
-import dateFormatter from "../utils/dateFormatter";
-import readTime from "../utils/readTime";
 import Link from "next/link";
 import maybeTruncateTextBlock from "../utils/maybeTruncateTextBlock";
-import AvatarList from "../components/AvatarList";
 import { DocumentRenderer } from "@keystatic/core/renderer";
 import Divider from "../components/Divider";
 
@@ -70,6 +67,7 @@ async function getExternalArticleData() {
       );
       return {
         ...externalArticle,
+        slug,
       };
     })
   );
@@ -166,47 +164,19 @@ export default function Home({
         <ul className="grid grid-cols-1 gap-4 md:gap-6 md:grid-cols-2 xl:grid-cols-3 pl-0">
           {orderedPostFeed.map((post, index) => {
             if (post.type === "externalArticle") {
-              return null;
-              // <li
-              //   className="items-stretchlist-none rounded pl-0 my-0 external-link bg-white"
-              //   key={index}
-              // >
-              //   <a
-              //     href={post.directLink}
-              //     target="_blank"
-              //     rel="noopener noreferrer"
-              //     className="no-underline hover:text-text-cyan-700 group"
-              //   >
-              //     <div className="border-2 border-slate-100 group-hover:border-text-cyan-700 rounded-lg prose">
-              //       {post.coverImage && (
-              //         <div className="not-prose">
-              //           <img
-              //             src={`/${post.coverImage}`}
-              //             className="w-full rounded-t-md aspect-video"
-              //             alt="Cover image"
-              //           />
-              //         </div>
-              //       )}
-              //       <div className="p-8 border-t-2 border-slate-100">
-              //         <p className='text-slate-500 group-hover:text-text-cyan-700 mt-0 mb-3 after:content-["_↗"]'>
-              //           {post.source}
-              //         </p>
-              //         <h3 className="mt-0 mb-3 group-hover:text-text-cyan-700">
-              //           {post.title}
-              //         </h3>
-              //         {post.summary && (
-              //           <p className="my-0">
-              //             {maybeTruncateTextBlock(post.summary, 100)}
-              //           </p>
-              //         )}
-              //       </div>
-              //     </div>
-              //   </a>
-              // </li>
-            }
-            if (post.type === "post") {
               console.log(post);
 
+              return (
+                <Card
+                  image={`${post.slug}/${post.coverImage}`}
+                  title={post.title}
+                  summary={post.summary}
+                  key={post.slug}
+                  link={`/${post.slug}`}
+                />
+              );
+            }
+            if (post.type === "post") {
               const filteredAuthors = authors.filter((el) =>
                 post.authors?.includes(el.slug)
               );
@@ -239,12 +209,6 @@ const Card = ({ image, title, summary, link }: any) => {
           {summary && (
             <p className="mb-3 mt-0">{maybeTruncateTextBlock(summary, 100)}</p>
           )}
-          {/* <AvatarList authors={filteredAuthors} /> */}
-          {/* {post.wordCount && post.wordCount !== 0 ? (
-            <p className="my-0 shrink-0 px-2 py-1 border-2 border-slate-500 group-hover:border-text-cyan-700 rounded-md">
-              {readTime(post.wordCount)}
-            </p>
-          ) : null} */}
         </div>
       </Link>
     </li>

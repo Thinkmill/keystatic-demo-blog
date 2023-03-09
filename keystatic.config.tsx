@@ -127,9 +127,11 @@ export default config({
       path: "content/externalArticles/*/",
       slugField: "title",
       schema: {
-        title: fields.text({
-          label: "Title",
-          validation: { length: { min: 4 } },
+        title: fields.slug({
+          name: {
+            label: "Title",
+            validation: { length: { min: 4 } },
+          },
         }),
         directLink: fields.url({
           label: "Article Link",
@@ -138,8 +140,9 @@ export default config({
           label: "Link Source",
           defaultValue: "Read more.",
         }),
-        coverImage: fields.text({
+        coverImage: fields.image({
           label: "Cover Image",
+          directory: "public",
         }),
         summary: fields.text({
           label: "Summary",
