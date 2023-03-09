@@ -16,7 +16,7 @@ export default function Footer() {
                 className={cx(
                   baseClasses,
                   pathname === item.slug
-                    ? "border-tm-red-brand border-b-2"
+                    ? "border-text-cyan-700 border-b-2"
                     : "border-transparent",
                   "block h-full"
                 )}
@@ -89,7 +89,7 @@ export default function Footer() {
               </a>
             </div>
             <p className="text-sm">
-              &copy; {new Date().getFullYear()} Thinkmill. All rights reserved.
+              &copy; {new Date().getFullYear()} Solaris. All rights reserved.
             </p>
           </div>
           <p className="text-sm">

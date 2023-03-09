@@ -81,22 +81,19 @@ export default config({
     posts: collection({
       label: "Posts",
       path: "content/posts/*/",
-      slugField: "slug",
+      slugField: "title",
       schema: {
-        title: fields.text({
-          label: "Title",
-          validation: { length: { min: 4 } },
-        }),
-        slug: fields.text({
-          label: "Slug",
-          validation: { length: { min: 4 } },
+        title: fields.slug({
+          name: {
+            label: "Title",
+          },
         }),
         summary: fields.text({
           label: "Summary",
           validation: { length: { min: 4 } },
         }),
         publishedDate: fields.date({ label: "Published Date" }),
-        coverImage: fields.text({ label: "Image" }),
+        coverImage: fields.image({ label: "Image", directory: "public" }),
         wordCount: fields.integer({
           label: "Word count",
         }),
@@ -130,9 +127,11 @@ export default config({
       path: "content/externalArticles/*/",
       slugField: "title",
       schema: {
-        title: fields.text({
-          label: "Title",
-          validation: { length: { min: 4 } },
+        title: fields.slug({
+          name: {
+            label: "Title",
+            validation: { length: { min: 4 } },
+          },
         }),
         directLink: fields.url({
           label: "Article Link",
@@ -141,8 +140,9 @@ export default config({
           label: "Link Source",
           defaultValue: "Read more.",
         }),
-        coverImage: fields.text({
+        coverImage: fields.image({
           label: "Cover Image",
+          directory: "public",
         }),
         summary: fields.text({
           label: "Summary",

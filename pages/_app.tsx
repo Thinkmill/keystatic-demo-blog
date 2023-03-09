@@ -14,7 +14,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   //When we are not in the Keystatic UI
   return (
-    <div className="flex min-h-screen flex-col with-preflight font-sans">
+    <div className="flex min-h-screen flex-col font-sans bg-neutral-200">
       <Header />
       <main className="max-w-none flex flex-1 flex-col">
         <div className="flex-1">

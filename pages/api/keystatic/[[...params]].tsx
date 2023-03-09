@@ -1,4 +1,13 @@
 import { makeAPIRouteHandler } from "@keystatic/next/api";
-import config from "../../../keystatic.config";
+import keystaticConfig from "../../../keystatic.config";
 
-export default makeAPIRouteHandler({ config });
+export const config = {
+  api: {
+    bodyParser: {
+      sizeLimit: "20mb",
+    },
+    responseLimit: "20mb",
+  },
+};
+
+export default makeAPIRouteHandler({ config: keystaticConfig });

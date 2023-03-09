@@ -28,7 +28,7 @@ export default function Banner({
           {bodyText}
           {externalLink && externalLink.href && (
             <a
-              className="text-tm-red-brand"
+              className="text-text-cyan-700"
               target="_blank"
               rel="noopener noreferrer"
               href={externalLink.href}

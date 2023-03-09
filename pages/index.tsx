@@ -1,11 +1,8 @@
 import type { InferGetStaticPropsType } from "next";
 import { createReader } from "@keystatic/core/reader";
 import config from "../keystatic.config";
-import dateFormatter from "../utils/dateFormatter";
-import readTime from "../utils/readTime";
 import Link from "next/link";
 import maybeTruncateTextBlock from "../utils/maybeTruncateTextBlock";
-import AvatarList from "../components/AvatarList";
 import { DocumentRenderer } from "@keystatic/core/renderer";
 import Divider from "../components/Divider";
 
@@ -52,12 +49,11 @@ async function getPostData() {
       const content = (await post?.content()) || [];
       return {
         ...post,
-        slug,
         content,
+        slug,
       };
     })
   );
-
   return postData;
 }
 
@@ -71,6 +67,7 @@ async function getExternalArticleData() {
       );
       return {
         ...externalArticle,
+        slug,
       };
     })
   );
@@ -146,7 +143,7 @@ export default function Home({
         renderers={{
           inline: {
             bold: ({ children }) => {
-              return <span className="text-tm-red-brand">{children}</span>;
+              return <span className="text-cyan-700">{children}</span>;
             },
           },
           block: {
@@ -167,43 +164,16 @@ export default function Home({
         <ul className="grid grid-cols-1 gap-4 md:gap-6 md:grid-cols-2 xl:grid-cols-3 pl-0">
           {orderedPostFeed.map((post, index) => {
             if (post.type === "externalArticle") {
+              console.log(post);
+
               return (
-                <li
-                  className="items-stretch list-none rounded pl-0 my-0 external-link"
-                  key={index}
-                >
-                  <a
-                    href={post.directLink}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="no-underline hover:text-tm-red-brand group"
-                  >
-                    <div className="border-2 border-slate-100 group-hover:border-tm-red-brand rounded-lg prose">
-                      {post.coverImage && (
-                        <div className="not-prose">
-                          <img
-                            src={`/${post.coverImage}`}
-                            className="w-full rounded-t-md aspect-video"
-                            alt="Cover image"
-                          />
-                        </div>
-                      )}
-                      <div className="p-8 border-t-2 border-slate-100">
-                        <p className='text-slate-500 group-hover:text-tm-red-brand mt-0 mb-3 after:content-["_↗"]'>
-                          {post.source}
-                        </p>
-                        <h3 className="mt-0 mb-3 group-hover:text-tm-red-brand">
-                          {post.title}
-                        </h3>
-                        {post.summary && (
-                          <p className="my-0">
-                            {maybeTruncateTextBlock(post.summary, 100)}
-                          </p>
-                        )}
-                      </div>
-                    </div>
-                  </a>
-                </li>
+                <Card
+                  image={`${post.slug}/${post.coverImage}`}
+                  title={post.title}
+                  summary={post.summary}
+                  key={post.slug}
+                  link={`/${post.slug}`}
+                />
               );
             }
             if (post.type === "post") {
@@ -211,52 +181,13 @@ export default function Home({
                 post.authors?.includes(el.slug)
               );
               return (
-                <li
-                  className="items-stretch list-none rounded pl-0 my-0"
-                  key={index}
-                >
-                  <Link
-                    href={`${post.slug}`}
-                    className="no-underline hover:text-tm-red-brand group"
-                  >
-                    <div className="border-2 border-slate-100 group-hover:border-tm-red-brand rounded-lg prose">
-                      {post.coverImage && (
-                        <div className="not-prose">
-                          <img
-                            src={`/${post.coverImage}`}
-                            className="w-full rounded-t-md aspect-video"
-                            alt="Cover image"
-                          />
-                        </div>
-                      )}
-                      <div className="p-8 border-t-2  border-slate-100">
-                        {post.publishedDate && (
-                          <p className="mt-0 mb-3 text-slate-500">
-                            {dateFormatter(post.publishedDate, "do MMM yyyy")}
-                          </p>
-                        )}
-                        <h3 className="mt-0 mb-3 group-hover:text-tm-red-brand">
-                          {post.title}
-                        </h3>
-                        {post.summary && (
-                          <p className="mb-3 mt-0">
-                            {maybeTruncateTextBlock(post.summary, 100)}
-                          </p>
-                        )}
-                        <div className="flex flex-row gap-1 justify-between items-center">
-                          <div className="flex gap-4 items-center not-prose">
-                            <AvatarList authors={filteredAuthors} />
-                          </div>
-                          {post.wordCount && post.wordCount !== 0 ? (
-                            <p className="my-0 shrink-0 px-2 py-1 border-2 border-slate-500 group-hover:border-tm-red-brand rounded-md">
-                              {readTime(post.wordCount)}
-                            </p>
-                          ) : null}
-                        </div>
-                      </div>
-                    </div>
-                  </Link>
-                </li>
+                <Card
+                  image={`${post.slug}/${post.coverImage}`}
+                  title={post.title}
+                  summary={post.summary}
+                  key={post.slug}
+                  link={`/${post.slug}`}
+                />
               );
             }
           })}
@@ -265,3 +196,21 @@ export default function Home({
     </div>
   );
 }
+
+const Card = ({ image, title, summary, link }: any) => {
+  return (
+    <li>
+      <Link href={link} className="no-underline">
+        <div>
+          <div>
+            <img src={image} alt="" className="mb-2" />
+          </div>
+          <h3 className="text-xl">{title}</h3>
+          {summary && (
+            <p className="mb-3 mt-0">{maybeTruncateTextBlock(summary, 100)}</p>
+          )}
+        </div>
+      </Link>
+    </li>
+  );
+};
