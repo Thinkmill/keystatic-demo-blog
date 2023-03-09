@@ -16,7 +16,7 @@ export default function Footer() {
                 className={cx(
                   baseClasses,
                   pathname === item.slug
-                    ? "border-tm-red-brand border-b-2"
+                    ? "border-text-cyan-700 border-b-2"
                     : "border-transparent",
                   "block h-full"
                 )}

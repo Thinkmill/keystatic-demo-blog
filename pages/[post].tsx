@@ -57,6 +57,7 @@ export const getStaticProps = async ({ params }: GetStaticPropsContext) => {
       post: {
         ...post,
         content,
+        slug,
       },
       authors: authorsData,
     },
@@ -102,7 +103,7 @@ export default function Post({ post, authors }: TheLot) {
       {post.coverImage && (
         <div className="not-prose mb-10">
           <img
-            src={`/${post.coverImage}`}
+            src={`${post.slug}/${post.coverImage}`}
             className="w-full rounded-md"
             alt="Cover image"
           />

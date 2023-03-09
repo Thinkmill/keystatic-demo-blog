@@ -5,7 +5,7 @@ import { cx } from "../utils/cx";
 import React from "react";
 
 export const baseClasses =
-  "no-underline justify-center items-center focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-1 text-gray-800 px-0 hover:text-tm-red-brand hover:bg-none bg-none font-medium shrink-0";
+  "no-underline justify-center items-center focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-1 text-gray-800 px-0 hover:text-cyan-700 hover:bg-none bg-none font-medium shrink-0";
 
 export const NavItems = [
   {
@@ -29,7 +29,7 @@ const KeystaticBanner = () => {
       <strong className="text-white">KEYSTATIC</strong> template.{" "}
       <a
         href="https://keystatic.thinkmill.com.au/"
-        className="text-white hover:text-tm-red-brand"
+        className="text-white hover:text-text-cyan-700"
         target="_blank"
         rel="noopener noreferrer"
       >
@@ -60,7 +60,7 @@ const Header = () => {
             >
               <p
                 className={cx(
-                  pathname === item.slug ? "text-tm-red-brand" : "",
+                  pathname === item.slug ? "text-text-cyan-700" : "",
                   "my-0 pb-2 font-bold"
                 )}
               >
@@ -79,7 +79,7 @@ const Header = () => {
       <KeystaticBanner />
       <div className="flex justify-between items-center px-4 md:px-28 py-4 md:py-10 h-full">
         <a
-          className="no-underline font-serif text-xl font-bold"
+          className="no-underline text-xl font-bold"
           href="/"
           aria-label="Link to home page"
         >
@@ -137,7 +137,7 @@ const Header = () => {
               className={cx(
                 baseClasses,
                 pathname === item.slug
-                  ? "border-tm-red-brand border-b-2"
+                  ? "border-text-cyan-700 border-b-2"
                   : "border-transparent"
               )}
               href={item.slug}

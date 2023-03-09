@@ -175,9 +175,9 @@ export default function Home({
               //     href={post.directLink}
               //     target="_blank"
               //     rel="noopener noreferrer"
-              //     className="no-underline hover:text-tm-red-brand group"
+              //     className="no-underline hover:text-text-cyan-700 group"
               //   >
-              //     <div className="border-2 border-slate-100 group-hover:border-tm-red-brand rounded-lg prose">
+              //     <div className="border-2 border-slate-100 group-hover:border-text-cyan-700 rounded-lg prose">
               //       {post.coverImage && (
               //         <div className="not-prose">
               //           <img
@@ -188,10 +188,10 @@ export default function Home({
               //         </div>
               //       )}
               //       <div className="p-8 border-t-2 border-slate-100">
-              //         <p className='text-slate-500 group-hover:text-tm-red-brand mt-0 mb-3 after:content-["_↗"]'>
+              //         <p className='text-slate-500 group-hover:text-text-cyan-700 mt-0 mb-3 after:content-["_↗"]'>
               //           {post.source}
               //         </p>
-              //         <h3 className="mt-0 mb-3 group-hover:text-tm-red-brand">
+              //         <h3 className="mt-0 mb-3 group-hover:text-text-cyan-700">
               //           {post.title}
               //         </h3>
               //         {post.summary && (
@@ -241,7 +241,7 @@ const Card = ({ image, title, summary, link }: any) => {
           )}
           {/* <AvatarList authors={filteredAuthors} /> */}
           {/* {post.wordCount && post.wordCount !== 0 ? (
-            <p className="my-0 shrink-0 px-2 py-1 border-2 border-slate-500 group-hover:border-tm-red-brand rounded-md">
+            <p className="my-0 shrink-0 px-2 py-1 border-2 border-slate-500 group-hover:border-text-cyan-700 rounded-md">
               {readTime(post.wordCount)}
             </p>
           ) : null} */}
