@@ -83,13 +83,10 @@ export default config({
       path: "content/posts/*/",
       slugField: "slug",
       schema: {
-        title: fields.text({
-          label: "Title",
-          validation: { length: { min: 4 } },
-        }),
-        slug: fields.text({
-          label: "Slug",
-          validation: { length: { min: 4 } },
+        slug: fields.slug({
+          name: {
+            label: "Title",
+          },
         }),
         summary: fields.text({
           label: "Summary",

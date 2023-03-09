@@ -50,9 +50,10 @@ async function getPostData() {
     postSlugs.map(async (slug) => {
       const post = await reader.collections.posts.read(slug);
       const content = (await post?.content()) || [];
+      console.log(post);
+
       return {
         ...post,
-        slug,
         content,
       };
     })
@@ -138,6 +139,7 @@ export default function Home({
 
     return 0;
   });
+  console.log(posts);
 
   return (
     <div className="px-4 md:px-28 max-w-7xl mx-auto">
@@ -146,7 +148,7 @@ export default function Home({
         renderers={{
           inline: {
             bold: ({ children }) => {
-              return <span className="text-tm-red-brand">{children}</span>;
+              return <span className="text-cyan-700">{children}</span>;
             },
           },
           block: {
@@ -169,7 +171,7 @@ export default function Home({
             if (post.type === "externalArticle") {
               return (
                 <li
-                  className="items-stretch list-none rounded pl-0 my-0 external-link"
+                  className="items-stretchlist-none rounded pl-0 my-0 external-link bg-white"
                   key={index}
                 >
                   <a
@@ -229,20 +231,20 @@ export default function Home({
                           />
                         </div>
                       )}
-                      <div className="p-8 border-t-2  border-slate-100">
+                      <div className="p-8 border-t-2  border-slate-100 bg-neutral-100">
                         {post.publishedDate && (
                           <p className="mt-0 mb-3 text-slate-500">
                             {dateFormatter(post.publishedDate, "do MMM yyyy")}
                           </p>
                         )}
                         <h3 className="mt-0 mb-3 group-hover:text-tm-red-brand">
-                          {post.title}
+                          {post.slug}
                         </h3>
-                        {post.summary && (
+                        {/* {post.summary && (
                           <p className="mb-3 mt-0">
                             {maybeTruncateTextBlock(post.summary, 100)}
                           </p>
-                        )}
+                        )} */}
                         <div className="flex flex-row gap-1 justify-between items-center">
                           <div className="flex gap-4 items-center not-prose">
                             <AvatarList authors={filteredAuthors} />

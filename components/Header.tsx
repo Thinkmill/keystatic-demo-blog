@@ -79,7 +79,7 @@ const Header = () => {
       <KeystaticBanner />
       <div className="flex justify-between items-center px-4 md:px-28 py-4 md:py-10 h-full">
         <a className="no-underline" href="/" aria-label="Link to home page">
-          <Image className="my-0" src={Logo} alt="Readmill logo" />
+          🌎 Solaris Daily News
         </a>
         {/* Mobile Hamburger Icon button */}
         <nav className="-mr-2 min-[768px]:hidden">
