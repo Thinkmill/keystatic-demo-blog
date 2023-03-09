@@ -81,9 +81,9 @@ export default config({
     posts: collection({
       label: "Posts",
       path: "content/posts/*/",
-      slugField: "slug",
+      slugField: "title",
       schema: {
-        slug: fields.slug({
+        title: fields.slug({
           name: {
             label: "Title",
           },
@@ -93,7 +93,7 @@ export default config({
           validation: { length: { min: 4 } },
         }),
         publishedDate: fields.date({ label: "Published Date" }),
-        coverImage: fields.text({ label: "Image" }),
+        coverImage: fields.image({ label: "Image", directory: "public" }),
         wordCount: fields.integer({
           label: "Word count",
         }),

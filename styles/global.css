@@ -2,14 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-  margin: 0
-}
-
-main a {
-  @apply font-medium text-gray-900 underline decoration-gray-300 decoration-2 underline-offset-4 hover:decoration-tm-red-brand hover:text-tm-red-brand hover:bg-none bg-none;
-}
-
-[target='_blank']:not(.external-link a) {
-  @apply after:ml-0.5 after:inline-block after:text-[0.8em] after:no-underline after:content-['_↗']
+[target="_blank"]:not(.external-link a) {
+  @apply after:ml-0.5 after:inline-block after:text-[0.8em] after:no-underline after:content-['_↗'];
 }
