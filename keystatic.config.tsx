@@ -93,7 +93,10 @@ export default config({
           validation: { length: { min: 4 } },
         }),
         publishedDate: fields.date({ label: "Published Date" }),
-        coverImage: fields.image({ label: "Image", directory: "public" }),
+        coverImage: fields.image({
+          label: "Image",
+          directory: "public/images/posts",
+        }),
         wordCount: fields.integer({
           label: "Word count",
         }),
@@ -142,7 +145,7 @@ export default config({
         }),
         coverImage: fields.image({
           label: "Cover Image",
-          directory: "public",
+          directory: "public/images/external-articles",
         }),
         summary: fields.text({
           label: "Summary",
