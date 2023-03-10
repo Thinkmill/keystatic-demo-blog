@@ -33,7 +33,14 @@ export type PostOrExternalArticleProps =
 const reader = createReader("", config);
 
 async function getHomeData() {
-  return await reader.singletons.home.read();
+  const reader = createReader("", config);
+  const homePage = await reader.singletons.home.read();
+  const homePageHeading = await (homePage?.heading() || []);
+
+  return {
+    ...homePage,
+    heading: homePageHeading,
+  };
 }
 
 async function getPostData() {
