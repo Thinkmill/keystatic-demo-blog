@@ -1,5 +1,6 @@
-import type { InferGetStaticPropsType } from "next";
 import Link from "next/link";
+import Image from "next/image";
+import type { InferGetStaticPropsType } from "next";
 import { createReader } from "@keystatic/core/reader";
 import { DocumentRenderer } from "@keystatic/core/renderer";
 
@@ -7,6 +8,7 @@ import config from "../keystatic.config";
 import Seo from "../components/Seo";
 import Divider from "../components/Divider";
 import { inject } from "../utils/slugHelpers";
+import { cx } from "../utils/cx";
 import maybeTruncateTextBlock from "../utils/maybeTruncateTextBlock";
 
 export type PostProps = InferGetStaticPropsType<
@@ -158,7 +160,7 @@ export default function Home({
       {orderedPostFeed.length === 0 ? (
         <h2>There are no posts available</h2>
       ) : (
-        <ul className="grid grid-cols-1 gap-4 md:gap-6 md:grid-cols-2 xl:grid-cols-3 pl-0">
+        <ul className="grid grid-cols-1 gap-4 md:gap-x-6 md:gap-y-10 md:grid-cols-2 xl:grid-cols-3 pl-0">
           {orderedPostFeed.map((post, index) => {
             if (post.type === "externalArticle") {
               return (
@@ -195,7 +197,7 @@ export default function Home({
 
 const Card = ({ image, title, summary, link, externalLink }: any) => {
   return (
-    <li className={externalLink ? "external-link" : ""}>
+    <li className={cx("group", externalLink && "external-link")}>
       <Link
         href={link}
         target={externalLink ? "_blank" : "_self"}
@@ -203,11 +205,21 @@ const Card = ({ image, title, summary, link, externalLink }: any) => {
       >
         <div>
           <div>
-            <img src={image} alt="" className="mb-2" />
+            <Image
+              src={image}
+              alt=""
+              width={768}
+              height={400}
+              className="ring-1 ring-black/5 rounded-sm"
+            />
           </div>
-          <h3 className="text-xl">{title}</h3>
+          <h3 className="mt-4 text-xl font-medium group-hover:underline">
+            {title}
+          </h3>
           {summary && (
-            <p className="mb-3 mt-0">{maybeTruncateTextBlock(summary, 100)}</p>
+            <p className="mt-3 text-gray-600 line-clamp-3">
+              {maybeTruncateTextBlock(summary, 100)}
+            </p>
           )}
         </div>
       </Link>

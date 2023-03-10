@@ -8,7 +8,7 @@ import Footer from "../components/Footer";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <div className="flex min-h-screen flex-col font-sans bg-neutral-200">
+    <div className="flex min-h-screen flex-col font-sans bg-neutral-200/80">
       <Header />
       <main className="max-w-none flex flex-1 flex-col">
         <div className="flex-1">
