@@ -2,6 +2,7 @@ import type { InferGetStaticPropsType } from "next";
 import { createReader } from "@keystatic/core/reader";
 import config from "../keystatic.config";
 import Link from "next/link";
+import { inject } from "../utils/slugHelpers";
 import maybeTruncateTextBlock from "../utils/maybeTruncateTextBlock";
 import { DocumentRenderer } from "@keystatic/core/renderer";
 import Divider from "../components/Divider";
@@ -29,19 +30,13 @@ export type PostOrExternalArticleProps =
   | PostsWithTypeProps
   | ExternalArticleWithTypeProps;
 
-async function getHomeData() {
-  const reader = createReader("", config);
-  const homePage = await reader.singletons.home.read();
-  const homePageHeading = await (homePage?.heading() || []);
+const reader = createReader("", config);
 
-  return {
-    ...homePage,
-    heading: homePageHeading,
-  };
+async function getHomeData() {
+  return await reader.singletons.home.read();
 }
 
 async function getPostData() {
-  const reader = createReader("", config);
   const postSlugs = await reader.collections.posts.list();
   const postData = await Promise.all(
     postSlugs.map(async (slug) => {
@@ -58,33 +53,21 @@ async function getPostData() {
 }
 
 async function getExternalArticleData() {
-  const reader = createReader("", config);
   const externalArticles = await reader.collections.externalArticles.list();
   const externalArticleData = await Promise.all(
-    externalArticles.map(async (slug) => {
-      const externalArticle = await reader.collections.externalArticles.read(
-        slug
-      );
-      return {
-        ...externalArticle,
-        slug,
-      };
-    })
+    externalArticles.map((slug) =>
+      inject(slug, reader.collections.externalArticles.read)
+    )
   );
   return externalArticleData;
 }
 
 async function getAllAuthors() {
-  const reader = createReader("", config);
   const authorsList = await reader.collections.authors.list();
   const allAuthors = await Promise.all(
-    authorsList.map(async (slug) => {
-      return await reader.collections.authors.read(slug);
-    })
+    authorsList.map((slug) => inject(slug, reader.collections.authors))
   );
-  return authorsList.map((el, index) => {
-    return { slug: el, ...allAuthors[index] };
-  });
+  return allAuthors;
 }
 
 export async function getStaticProps() {
