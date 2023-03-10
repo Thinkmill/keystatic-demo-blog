@@ -160,7 +160,7 @@ export default function Home({
       {orderedPostFeed.length === 0 ? (
         <h2>There are no posts available</h2>
       ) : (
-        <ul className="grid grid-cols-1 gap-4 md:gap-x-6 md:gap-y-10 md:grid-cols-2 xl:grid-cols-3 pl-0">
+        <ul className="grid grid-cols-1 gap-4 md:gap-x-6 gap-y-20 sm:gap-y-16 md:grid-cols-2 xl:grid-cols-3 pl-0">
           {orderedPostFeed.map((post, index) => {
             if (post.type === "externalArticle") {
               return (
