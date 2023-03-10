@@ -3,6 +3,7 @@ import { createReader } from "@keystatic/core/reader";
 import config from "../keystatic.config";
 import { DocumentRenderer } from "@keystatic/core/renderer";
 
+import Seo from "../components/Seo";
 import Banner from "../components/Banner";
 import InlineCTA from "../components/InlineCTA";
 import Divider from "../components/Divider";
@@ -32,6 +33,7 @@ export default function About({
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
     <div className="mx-auto px-4 md:px-10 prose max-w-7xl">
+      <Seo title="About | Solaris Daily News" />
       <DocumentRenderer
         document={about.content}
         componentBlocks={{

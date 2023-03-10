@@ -5,6 +5,7 @@ import dateFormatter from "../utils/dateFormatter";
 import readTime from "../utils/readTime";
 import { DocumentRenderer } from "@keystatic/core/renderer";
 
+import Seo from "../components/Seo";
 import Banner from "../components/Banner";
 import InlineCTA from "../components/InlineCTA";
 import Divider from "../components/Divider";
@@ -81,8 +82,16 @@ export default function Post({ post, authors }: TheLot) {
     .replace("and", "&");
   return (
     <div className="max-w-4xl mx-auto px-4 md:px-10 prose">
+      <Seo
+        title={post.title}
+        imagePath={
+          post.coverImage
+            ? `/images/posts/${post.slug}/${post.coverImage}`
+            : "/images/seo-image.png"
+        }
+      />
       <div className="flex gap-4 items-center not-prose">
-        <AvatarList authors={authors} />
+        {authors && <AvatarList authors={authors} />}
         {formattedNames}
       </div>
 
@@ -103,7 +112,7 @@ export default function Post({ post, authors }: TheLot) {
       {post.coverImage && (
         <div className="not-prose mb-10">
           <img
-            src={`${post.slug}/${post.coverImage}`}
+            src={`/images/posts/${post.slug}/${post.coverImage}`}
             className="w-full rounded-md"
             alt="Cover image"
           />
