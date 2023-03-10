@@ -56,7 +56,7 @@ async function getExternalArticleData() {
   const externalArticles = await reader.collections.externalArticles.list();
   const externalArticleData = await Promise.all(
     externalArticles.map((slug) =>
-      inject(slug, reader.collections.externalArticles.read)
+      inject(slug, reader.collections.externalArticles)
     )
   );
   return externalArticleData;
