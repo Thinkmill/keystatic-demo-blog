@@ -81,8 +81,6 @@ export async function getStaticProps() {
     getAllAuthors(),
   ]);
 
-  console.log(externalArticles);
-
   return {
     props: {
       home,
