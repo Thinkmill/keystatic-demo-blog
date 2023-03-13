@@ -72,6 +72,7 @@ export default config({
             },
           },
         }),
+        role: fields.text({ label: "Role" }),
         avatar: fields.image({
           label: "Author avatar",
           directory: "public/images/authors",
