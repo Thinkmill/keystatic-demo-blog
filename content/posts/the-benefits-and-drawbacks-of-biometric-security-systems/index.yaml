@@ -5,4 +5,5 @@ summary: >-
 publishedDate: '1955-02-12'
 coverImage: coverImage.jpg
 wordCount: 123
-authors: []
+authors:
+  - dr-james-lee
