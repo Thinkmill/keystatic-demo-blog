@@ -85,6 +85,7 @@ export default function Post({ post, authors }: TheLot) {
     <div className="max-w-4xl mx-auto px-4 md:px-10">
       <Seo
         title={post.title}
+        description={post?.summary}
         imagePath={
           post.coverImage
             ? `/images/posts/${post.slug}/${post.coverImage}`
