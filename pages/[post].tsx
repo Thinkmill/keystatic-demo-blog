@@ -39,26 +39,21 @@ export const getStaticProps = async ({ params }: GetStaticPropsContext) => {
 
   const reader = createReader("", config);
   // Get data for post matching current slug
-  const post = await reader.collections.posts.read(slug);
+  const post = await reader.collections.posts.readOrThrow(slug, {
+    resolveLinkedFiles: true,
+  });
 
-  const authorsData = post
-    ? await Promise.all(
-        post.authors.map(async (authorSlug) => {
-          const author = await reader.collections.authors.read(
-            authorSlug || ""
-          );
-          return { ...author, slug: authorSlug };
-        })
-      )
-    : [];
+  const authorsData = await Promise.all(
+    post.authors.map(async (authorSlug) => {
+      const author = await reader.collections.authors.read(authorSlug || "");
+      return { ...author, slug: authorSlug };
+    })
+  );
 
-  // Get async data from 'content'
-  const content = await (post?.content() || []);
   return {
     props: {
       post: {
         ...post,
-        content,
         slug,
       },
       authors: authorsData,
@@ -73,11 +68,15 @@ export type AuthorProps = InferGetStaticPropsType<
 
 type TheLot = {
   post: PostProps;
-  authors: AuthorProps[];
+  authors: AuthorProps;
 };
 
 export default function Post({ post, authors }: TheLot) {
-  const names = authors.map((author) => author.name);
+  const names = authors.reduce(
+    (acc: string[], author) =>
+      "name" in author ? [...acc, author.name as string] : acc,
+    []
+  );
   const formattedNames = new Intl.ListFormat("en-AU")
     .format(names)
     .replace("and", "&");

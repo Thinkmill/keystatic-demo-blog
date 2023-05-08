@@ -108,6 +108,7 @@ export default config({
           }),
           {
             label: "Authors",
+            validation: { length: { min: 1 } },
             itemLabel: (props) => props.value || "Please select an author",
           }
         ),
