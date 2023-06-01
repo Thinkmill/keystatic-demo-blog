@@ -25,7 +25,7 @@ export const ComponentBlocks = {
         summary={props.fields.summary.value}
         linkButton={{
           externalLink: props.fields.externalLink.value,
-          href: props.fields.href.value,
+          href: props.fields.href.value || "",
           label: props.fields.linkLabel.value,
         }}
       />
@@ -34,7 +34,11 @@ export const ComponentBlocks = {
       title: fields.text({ label: "Title" }),
       summary: fields.text({ label: "Summary" }),
       linkLabel: fields.text({ label: "Link Label" }),
-      href: fields.url({ label: "Link" }),
+      href: fields.url({
+        label: "Link",
+        defaultValue: "",
+        validation: { isRequired: true },
+      }),
       externalLink: fields.checkbox({
         label: "External Link",
       }),
@@ -47,7 +51,7 @@ export const ComponentBlocks = {
         heading={props.fields.heading.value}
         bodyText={props.fields.bodyText.value}
         externalLink={{
-          href: props.fields.externalLinkHref.value,
+          href: props.fields.externalLinkHref.value || "",
           label: props.fields.externalLinkLabel.value,
         }}
       />
@@ -69,9 +73,10 @@ export const ComponentBlocks = {
   }),
   youtubeEmbed: component({
     label: "YouTube Embed",
-    preview: (props) => (
-      <YouTubeEmbed youtubeLink={props.fields.youtubeLink.value} />
-    ),
+    preview: (props) => {
+      const youtubeLink = props.fields.youtubeLink.value;
+      return youtubeLink ? <YouTubeEmbed youtubeLink={youtubeLink} /> : null;
+    },
     schema: {
       youtubeLink: fields.url({
         label: "YouTube URL",
@@ -80,7 +85,7 @@ export const ComponentBlocks = {
   }),
   tweetEmbed: component({
     label: "Tweet Embed",
-    preview: (props) => <TweetEmbed tweet={props.fields.tweet.value} />,
+    preview: (props) => <TweetEmbed tweet={props.fields.tweet.value || ""} />,
     schema: {
       tweet: fields.url({
         label: "Tweet URL",
@@ -132,7 +137,7 @@ export const ComponentBlocks = {
         quote={props.fields.quote.value}
         author={props.fields.author.value}
         workplaceOrSocial={props.fields.workplaceOrSocial.value}
-        socialLink={props.fields.socialLink.value}
+        socialLink={props.fields.socialLink.value || ""}
       />
     ),
     schema: {

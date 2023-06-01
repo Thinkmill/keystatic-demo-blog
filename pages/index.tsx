@@ -11,29 +11,6 @@ import { inject } from "../utils/slugHelpers";
 import { cx } from "../utils/cx";
 import maybeTruncateTextBlock from "../utils/maybeTruncateTextBlock";
 
-export type PostProps = InferGetStaticPropsType<
-  typeof getStaticProps
->["posts"][number];
-
-export type AuthorProps = InferGetStaticPropsType<
-  typeof getStaticProps
->["authors"][number];
-
-export type ExternalArticleProps = InferGetStaticPropsType<
-  typeof getStaticProps
->["externalArticles"][number];
-
-export type PostsWithTypeProps = PostProps & {
-  type: "post";
-};
-export type ExternalArticleWithTypeProps = ExternalArticleProps & {
-  type: "externalArticle";
-};
-
-export type PostOrExternalArticleProps =
-  | PostsWithTypeProps
-  | ExternalArticleWithTypeProps;
-
 const reader = createReader("", config);
 
 async function getHomeData() {
@@ -57,6 +34,7 @@ async function getPostData() {
         ...post,
         content,
         slug,
+        ...({ type: "post" } as const),
       };
     })
   );
@@ -70,7 +48,10 @@ async function getExternalArticleData() {
       inject(slug, reader.collections.externalArticles)
     )
   );
-  return externalArticleData;
+  return externalArticleData.map((article) => ({
+    ...({ type: "externalArticle" } as const),
+    ...article,
+  }));
 }
 
 async function getAllAuthors() {
@@ -103,22 +84,8 @@ export default function Home({
   home,
   posts,
   externalArticles,
-  authors,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
-  const PostsWithType = posts.map(
-    (post): PostsWithTypeProps => ({ type: "post", ...post })
-  );
-  const ExternalArticleWithType = externalArticles.map(
-    (article): ExternalArticleWithTypeProps => ({
-      type: "externalArticle",
-      ...article,
-    })
-  );
-
-  const allPosts: PostOrExternalArticleProps[] = [
-    ...PostsWithType,
-    ...ExternalArticleWithType,
-  ];
+  const allPosts = [...posts, ...externalArticles];
   const orderedPostFeed = allPosts.sort((a, b) => {
     if (a?.publishedDate && b?.publishedDate) {
       return new Date(a.publishedDate).getTime() <
@@ -161,7 +128,7 @@ export default function Home({
         <h2>There are no posts available</h2>
       ) : (
         <ul className="grid grid-cols-1 gap-4 md:gap-x-6 gap-y-20 sm:gap-y-16 md:grid-cols-2 xl:grid-cols-3 pl-0">
-          {orderedPostFeed.map((post, index) => {
+          {orderedPostFeed.map((post) => {
             if (post.type === "externalArticle") {
               return (
                 <Card
@@ -169,15 +136,12 @@ export default function Home({
                   title={post.title}
                   summary={post.summary}
                   key={post.slug}
-                  link={`${post.directLink}`}
+                  link={post.directLink}
                   externalLink
                 />
               );
             }
             if (post.type === "post") {
-              const filteredAuthors = authors.filter((el) =>
-                post.authors?.includes(el.slug)
-              );
               return (
                 <Card
                   image={`/images/posts/${post.slug}/${post.coverImage}`}
