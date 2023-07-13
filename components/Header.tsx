@@ -12,12 +12,12 @@ export const NavItems = [
     name: "Home",
     slug: "/",
     description:
-      "A collection of readings crafted by the talended folks at Thinkmill.",
+      "A collection of readings on the power and potential of biometrics",
   },
   {
     name: "About",
     slug: "/about",
-    description: "Readmill is a simple blog template for Keystatic.",
+    description: "Solaris is a simple blog template for Keystatic.",
   },
 ];
 
