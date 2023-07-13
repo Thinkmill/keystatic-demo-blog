@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "dependencies": {
     "@keystatic/core": "^0.0.109",
-    "@keystatic/next": "^0.0.7",
+    "@keystatic/next": "^0.0.11",
     "@types/react": "^18.2.6",
     "@types/react-dom": "^18.2.4",
     "date-fns": "^2.30.0",
