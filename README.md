@@ -1,9 +1,10 @@
-# Keystatic Blog Template
+Keystatic Demo – Blog
+A basic blog templatebuilt with Keystatic, Next.js and Tailwind CSS.
 
-This is a basic blog template using Keystatic as a CMS.
+Install dependencies:
 
-It uses:
+npm install
+Start the dev server:
 
-- Keystatic
-- NextJS
-- TailwindCSS
+npm run dev
+Visit http://127.0.0.1:3000/keystatic to see the Keystatic Admin UI.

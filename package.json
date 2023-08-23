@@ -1,28 +1,28 @@
 {
-  "name": "@keystatic/starter-blog",
+  "name": "@keystatic/demo-blog",
   "private": true,
   "version": "0.0.0",
   "dependencies": {
-    "@keystatic/core": "^0.0.65",
-    "@keystatic/next": "^0.0.4",
-    "@types/react": "^18.0.28",
-    "@types/react-dom": "^18.0.11",
-    "date-fns": "^2.29.3",
-    "next": "^13.2.4",
+    "@keystatic/core": "^0.0.116",
+    "@keystatic/next": "^0.0.11",
+    "@types/react": "^18.2.21",
+    "@types/react-dom": "^18.2.7",
+    "date-fns": "^2.30.0",
+    "next": "^13.4.19",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "typescript": "^4.9.4"
+    "typescript": "^5.1.6"
   },
   "scripts": {
-    "dev": "next",
+    "dev": "next -p 4444",
     "build": "next build",
     "postinstall": "touch .env"
   },
   "devDependencies": {
-    "@tailwindcss/line-clamp": "^0.4.2",
+    "@tailwindcss/line-clamp": "^0.4.4",
     "@tailwindcss/typography": "^0.5.9",
-    "autoprefixer": "^10.4.14",
-    "postcss": "^8.4.21",
-    "tailwindcss": "^3.2.6"
+    "autoprefixer": "^10.4.15",
+    "postcss": "^8.4.28",
+    "tailwindcss": "^3.3.3"
   }
 }

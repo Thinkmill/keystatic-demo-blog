@@ -28,7 +28,7 @@ const KeystaticBanner = () => {
       <img className="my-0 inline" src="/keystatic.svg" alt="Keystatic logo" />{" "}
       <strong className="text-white">KEYSTATIC</strong> template.{" "}
       <a
-        href="https://keystatic.thinkmill.com.au/"
+        href="https://keystatic.com"
         className="text-white hover:text-text-cyan-700"
         target="_blank"
         rel="noopener noreferrer"
