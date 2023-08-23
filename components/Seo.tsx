@@ -47,6 +47,7 @@ export default function Seo({
       <meta property="og:site_name" content={title} />
       <meta property="og:url" content={currentUrl} />
       <meta property="og:image" content={rootUrl + imagePath} />
+      <link rel="icon" href="/favicon.ico" />
     </NextHead>
   );
 }
