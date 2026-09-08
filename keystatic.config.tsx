@@ -6,7 +6,22 @@ import {
   LocalConfig,
   singleton,
 } from "@keystatic/core";
-import { ComponentBlocks } from "./components/ComponentBlocks";
+import { ContentComponents } from "./components/ComponentBlocks";
+
+const richTextOptions = {
+  bold: true,
+  italic: true,
+  strikethrough: true,
+  code: true,
+  heading: true,
+  blockquote: true,
+  orderedList: true,
+  unorderedList: true,
+  table: true,
+  link: true,
+  divider: true,
+  codeBlock: true,
+} as const;
 
 const storage: LocalConfig["storage"] | GitHubConfig["storage"] =
   process.env.NODE_ENV === "development"
@@ -24,34 +39,26 @@ export default config({
   singletons: {
     home: singleton({
       label: "Home",
-      path: "content/pages/home/",
+      path: "content/pages/home",
+      format: { contentField: "heading" },
+      entryLayout: "content",
       schema: {
-        heading: fields.document({
-          formatting: {
-            inlineMarks: {
-              bold: true,
-            },
-          },
+        heading: fields.markdoc({
+          options: { bold: true },
           label: "Heading (note: text that is bolded will show up in red)",
         }),
       },
     }),
     about: singleton({
       label: "About",
-      path: "content/pages/about/",
+      path: "content/pages/about",
+      format: { contentField: "content" },
+      entryLayout: "content",
       schema: {
-        content: fields.document({
-          formatting: true,
-          dividers: true,
-          links: true,
-          layouts: [
-            [1, 1],
-            [1, 1, 1],
-            [2, 1],
-            [1, 2, 1],
-          ],
+        content: fields.markdoc({
           label: "Content",
-          componentBlocks: ComponentBlocks,
+          options: richTextOptions,
+          components: ContentComponents,
         }),
       },
     }),
@@ -81,8 +88,10 @@ export default config({
     }),
     posts: collection({
       label: "Posts",
-      path: "content/posts/*/",
+      path: "content/posts/*",
       slugField: "title",
+      format: { contentField: "content" },
+      entryLayout: "content",
       schema: {
         title: fields.slug({
           name: {
@@ -112,24 +121,16 @@ export default config({
             itemLabel: (props) => props.value || "Please select an author",
           }
         ),
-        content: fields.document({
-          formatting: true,
-          dividers: true,
-          links: true,
-          layouts: [
-            [1, 1],
-            [1, 1, 1],
-            [2, 1],
-            [1, 2, 1],
-          ],
+        content: fields.markdoc({
           label: "Content",
-          componentBlocks: ComponentBlocks,
+          options: richTextOptions,
+          components: ContentComponents,
         }),
       },
     }),
     externalArticles: collection({
       label: "External Article",
-      path: "content/externalArticles/*/",
+      path: "content/externalArticles/*",
       slugField: "title",
       schema: {
         title: fields.slug({

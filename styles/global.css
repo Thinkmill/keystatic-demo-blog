@@ -1,6 +1,5 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
 
 [target="_blank"]:not(.external-link a) {
   @apply after:ml-0.5 after:inline-block after:text-[0.8em] after:no-underline after:content-['_↗'];

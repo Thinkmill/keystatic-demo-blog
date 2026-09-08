@@ -1,4 +1,5 @@
-import { component, fields } from "@keystatic/core";
+import { fields } from "@keystatic/core";
+import { block } from "@keystatic/core/content-components";
 
 import Banner from "./Banner";
 import InlineCTA from "./InlineCTA";
@@ -9,24 +10,24 @@ import LoopingVideo from "./LoopingVideo";
 import Image from "./Image";
 import Testimonial from "./Testimonial";
 
-export const ComponentBlocks = {
-  divider: component({
+export const ContentComponents = {
+  divider: block({
     label: "Divider",
-    preview: (props) => <Divider noIcon={props.fields.noIcon.value} />,
+    ContentView: ({ value }) => <Divider noIcon={value.noIcon} />,
     schema: {
       noIcon: fields.checkbox({ label: "No Icon" }),
     },
   }),
-  inlineCta: component({
+  inlineCta: block({
     label: "Inline CTA",
-    preview: (props) => (
+    ContentView: ({ value }) => (
       <InlineCTA
-        title={props.fields.title.value}
-        summary={props.fields.summary.value}
+        title={value.title}
+        summary={value.summary}
         linkButton={{
-          externalLink: props.fields.externalLink.value,
-          href: props.fields.href.value || "",
-          label: props.fields.linkLabel.value,
+          externalLink: value.externalLink,
+          href: value.href || "",
+          label: value.linkLabel,
         }}
       />
     ),
@@ -39,84 +40,59 @@ export const ComponentBlocks = {
         defaultValue: "",
         validation: { isRequired: true },
       }),
-      externalLink: fields.checkbox({
-        label: "External Link",
-      }),
+      externalLink: fields.checkbox({ label: "External Link" }),
     },
   }),
-  banner: component({
+  banner: block({
     label: "Banner",
-    preview: (props) => (
+    ContentView: ({ value }) => (
       <Banner
-        heading={props.fields.heading.value}
-        bodyText={props.fields.bodyText.value}
+        heading={value.heading}
+        bodyText={value.bodyText}
         externalLink={{
-          href: props.fields.externalLinkHref.value || "",
-          label: props.fields.externalLinkLabel.value,
+          href: value.externalLinkHref || "",
+          label: value.externalLinkLabel,
         }}
       />
     ),
     schema: {
-      heading: fields.text({
-        label: "Heading",
-      }),
-      bodyText: fields.text({
-        label: "Body Text",
-      }),
-      externalLinkHref: fields.url({
-        label: "External Link",
-      }),
-      externalLinkLabel: fields.text({
-        label: "Link Label",
-      }),
+      heading: fields.text({ label: "Heading" }),
+      bodyText: fields.text({ label: "Body Text" }),
+      externalLinkHref: fields.url({ label: "External Link" }),
+      externalLinkLabel: fields.text({ label: "Link Label" }),
     },
   }),
-  youtubeEmbed: component({
+  youtubeEmbed: block({
     label: "YouTube Embed",
-    preview: (props) => {
-      const youtubeLink = props.fields.youtubeLink.value;
-      return youtubeLink ? <YouTubeEmbed youtubeLink={youtubeLink} /> : null;
-    },
+    ContentView: ({ value }) =>
+      value.youtubeLink ? (
+        <YouTubeEmbed youtubeLink={value.youtubeLink} />
+      ) : null,
     schema: {
-      youtubeLink: fields.url({
-        label: "YouTube URL",
-      }),
+      youtubeLink: fields.url({ label: "YouTube URL" }),
     },
   }),
-  tweetEmbed: component({
+  tweetEmbed: block({
     label: "Tweet Embed",
-    preview: (props) => <TweetEmbed tweet={props.fields.tweet.value || ""} />,
+    ContentView: ({ value }) => <TweetEmbed tweet={value.tweet || ""} />,
     schema: {
-      tweet: fields.url({
-        label: "Tweet URL",
-      }),
+      tweet: fields.url({ label: "Tweet URL" }),
     },
   }),
-  loopingVideo: component({
+  loopingVideo: block({
     label: "Looping Video",
-    preview: (props) => (
-      <LoopingVideo
-        src={props.fields.src.value}
-        caption={props.fields.caption.value}
-      />
+    ContentView: ({ value }) => (
+      <LoopingVideo src={value.src} caption={value.caption} />
     ),
     schema: {
-      src: fields.text({
-        label: "File Name",
-      }),
-      caption: fields.text({
-        label: "Caption",
-      }),
+      src: fields.text({ label: "File Name" }),
+      caption: fields.text({ label: "Caption" }),
     },
   }),
-  image: component({
+  image: block({
     label: "Image",
-    preview: (props) => (
-      <Image
-        src={props.fields.src.value}
-        alt={props.fields.alt.value}
-        caption={props.fields.caption.value}
-      />
+    ContentView: ({ value }) => (
+      <Image src={value.src} alt={value.alt} caption={value.caption} />
     ),
     schema: {
       src: fields.text({
@@ -130,30 +106,23 @@ export const ComponentBlocks = {
       caption: fields.text({ label: "Caption" }),
     },
   }),
-  testimonial: component({
+  testimonial: block({
     label: "Testimonial",
-    preview: (props) => (
+    ContentView: ({ value }) => (
       <Testimonial
-        quote={props.fields.quote.value}
-        author={props.fields.author.value}
-        workplaceOrSocial={props.fields.workplaceOrSocial.value}
-        socialLink={props.fields.socialLink.value || ""}
+        quote={value.quote}
+        author={value.author}
+        workplaceOrSocial={value.workplaceOrSocial}
+        socialLink={value.socialLink || ""}
       />
     ),
     schema: {
-      quote: fields.text({
-        label: "Quote",
-        multiline: true,
-      }),
-      author: fields.text({
-        label: "Author",
-      }),
+      quote: fields.text({ label: "Quote", multiline: true }),
+      author: fields.text({ label: "Author" }),
       workplaceOrSocial: fields.text({
         label: "Workplace or Social account name",
       }),
-      socialLink: fields.url({
-        label: "Social media link",
-      }),
+      socialLink: fields.url({ label: "Social media link" }),
     },
   }),
 };

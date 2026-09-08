@@ -2,11 +2,12 @@ import Link from "next/link";
 import Image from "next/image";
 import type { InferGetStaticPropsType } from "next";
 import { createReader } from "@keystatic/core/reader";
-import { DocumentRenderer } from "@keystatic/core/renderer";
 
 import config from "../keystatic.config";
 import Seo from "../components/Seo";
 import Divider from "../components/Divider";
+import { HomeHeading } from "../components/MarkdocRenderer";
+import { transformHomeHeading } from "../utils/markdoc";
 import { inject } from "../utils/slugHelpers";
 import { cx } from "../utils/cx";
 import maybeTruncateTextBlock from "../utils/maybeTruncateTextBlock";
@@ -15,12 +16,12 @@ const reader = createReader("", config);
 
 async function getHomeData() {
   const reader = createReader("", config);
-  const homePage = await reader.singletons.home.read();
-  const homePageHeading = await (homePage?.heading() || []);
+  const homePage = await reader.singletons.home.readOrThrow({
+    resolveLinkedFiles: true,
+  });
 
   return {
-    ...homePage,
-    heading: homePageHeading,
+    heading: transformHomeHeading(homePage.heading),
   };
 }
 
@@ -28,11 +29,10 @@ async function getPostData() {
   const postSlugs = await reader.collections.posts.list();
   const postData = await Promise.all(
     postSlugs.map(async (slug) => {
-      const post = await reader.collections.posts.read(slug);
-      const content = (await post?.content()) || [];
+      const post = await reader.collections.posts.readOrThrow(slug);
+      const { content: _content, ...metadata } = post;
       return {
-        ...post,
-        content,
+        ...metadata,
         slug,
         ...({ type: "post" } as const),
       };
@@ -102,25 +102,7 @@ export default function Home({
       <Seo />
       {home.heading && (
         <>
-          <DocumentRenderer
-            document={home.heading}
-            renderers={{
-              inline: {
-                bold: ({ children }) => {
-                  return <span className="text-cyan-700">{children}</span>;
-                },
-              },
-              block: {
-                paragraph: ({ children }) => {
-                  return (
-                    <h1 className="text-center font-bold text-2xl max-w-xs sm:text-5xl sm:max-w-2xl lg:text-7xl lg:max-w-[60rem] mx-auto">
-                      {children}
-                    </h1>
-                  );
-                },
-              },
-            }}
-          />
+          <HomeHeading content={home.heading} />
           <Divider />
         </>
       )}
